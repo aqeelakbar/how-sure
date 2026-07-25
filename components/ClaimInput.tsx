@@ -32,7 +32,13 @@ export function ClaimInput({ value, onChange, onAnalyse, error }: Props) {
           />
           <div className="input-actions">
             <span>{value.length}/500</span>
-            <button type="button" onClick={onAnalyse}>Analyse claim</button>
+            <button
+              type="button"
+              className="analyse-claim-action"
+              onClick={onAnalyse}
+            >
+              Analyse claim
+            </button>
           </div>
 
           {error && <p className="input-error">{error}</p>}

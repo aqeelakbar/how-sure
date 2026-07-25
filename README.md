@@ -1565,3 +1565,20 @@ A new dependency is included:
 ```bash
 npm install lucide-react
 ```
+
+
+# V3.1.2 — CTA consistency and sharing language
+
+## Homepage CTA
+
+`Analyse claim` now uses the same compact uppercase typography, height, padding,
+square corners and primary treatment as the report and sticky-header CTAs.
+
+## Share analysis
+
+The report action is renamed from `Copy link` to `Share analysis` and now uses
+Lucide's `Share2` icon.
+
+This describes the user's goal rather than the technical action. The button still
+copies the permanent analysis URL to the clipboard and temporarily confirms with
+`Link copied`.

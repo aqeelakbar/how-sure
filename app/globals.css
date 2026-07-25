@@ -3666,3 +3666,58 @@ svg {
     font-size: 8px;
   }
 }
+
+
+/* V3.1.2 — consistent primary CTA and clearer sharing action */
+.input-actions .analyse-claim-action {
+  min-height: 34px;
+  height: 34px;
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.input-actions .analyse-claim-action:hover {
+  opacity: .82;
+}
+
+.input-actions .analyse-claim-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.report-nav-actions .share-action {
+  gap: 7px;
+}
+
+.report-nav-actions .share-action svg {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 780px) {
+  .input-actions .analyse-claim-action {
+    min-height: 30px;
+    height: 30px;
+    padding: 7px 9px;
+    font-size: 8px;
+  }
+
+  .report-nav-actions .share-action {
+    gap: 5px;
+  }
+
+  .report-nav-actions .share-action svg {
+    width: 11px;
+    height: 11px;
+  }
+}

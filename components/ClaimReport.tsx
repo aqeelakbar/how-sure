@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Share2 } from "lucide-react";
 import type { ClaimAnalysis } from "@/types/claim";
 import { ScoreCard } from "@/components/ScoreCard";
 import { EvidencePanel } from "@/components/EvidencePanel";
@@ -36,7 +37,7 @@ export function ClaimReport({
   const heroRef = useRef<HTMLElement | null>(null);
   const [showStickyClaim, setShowStickyClaim] = useState(false);
   const [selectedScore, setSelectedScore] = useState<string | null>(null);
-  const [shareLabel, setShareLabel] = useState("Copy link");
+  const [shareLabel, setShareLabel] = useState("Share analysis");
 
   const selectedTheme =
     data.scoreThemes.find((theme) => theme.id === selectedScore) ?? null;
@@ -83,13 +84,14 @@ export function ClaimReport({
                 try {
                   await navigator.clipboard.writeText(url);
                   setShareLabel("Link copied");
-                  window.setTimeout(() => setShareLabel("Copy link"), 1800);
+                  window.setTimeout(() => setShareLabel("Share analysis"), 1800);
                 } catch {
                   window.prompt("Copy this link", url);
                 }
               }}
             >
-              {shareLabel}
+              <Share2 aria-hidden="true" size={13} strokeWidth={2} />
+              <span>{shareLabel}</span>
             </button>
           )}
 
