@@ -1663,3 +1663,24 @@ disclaimer:
 - The stats only include saved assessments whose quality status is passed.
 - The public stats request is cached for 60 seconds and never blocks the claim
   input from rendering.
+
+
+# V3.2.3 — Gemini thinking-level type fix
+
+The installed `@google/genai` SDK exposes thinking levels as an enum rather than
+accepting string literals.
+
+The analysis route now imports:
+
+```ts
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
+```
+
+and uses:
+
+```ts
+ThinkingLevel.LOW
+ThinkingLevel.MEDIUM
+```
+
+for the initial/fallback and repair passes respectively.

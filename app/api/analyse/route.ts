@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { after, NextResponse } from "next/server";
 import { claimAnalysisSchema } from "@/lib/claimSchema";
 import { extractJson } from "@/lib/ai/json";
@@ -515,7 +515,7 @@ Produce 2–5 rationale items per score and 2–8 useful annotations.
           contents: prompt,
           config: {
             thinkingConfig: {
-              thinkingLevel: "low",
+              thinkingLevel: ThinkingLevel.LOW,
             },
           },
         }),
@@ -632,7 +632,7 @@ Return JSON only, using exactly the same shape as the previous analysis.
             contents: repairPrompt,
             config: {
               thinkingConfig: {
-                thinkingLevel: "medium",
+                thinkingLevel: ThinkingLevel.MEDIUM,
               },
             },
           }),
@@ -751,7 +751,7 @@ Return the full JSON analysis object only.
                 contents: fallbackPrompt,
                 config: {
                   thinkingConfig: {
-                    thinkingLevel: "low",
+                    thinkingLevel: ThinkingLevel.LOW,
                   },
                 },
               }),
