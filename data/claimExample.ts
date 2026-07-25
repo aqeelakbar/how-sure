@@ -6,22 +6,22 @@ export const claimExample: ClaimAnalysis = {
   detectedClaims: [
     {
       id: "C1",
-      text: "Islam is not up for reform or negotiation.",
+      text: "Islam is not up for reform or negotiation."
     },
     {
       id: "C2",
-      text: "There is no other choice than to fight Islam.",
-    },
+      text: "There is no other choice than to fight Islam."
+    }
   ],
   speaker: "Tommy Robinson",
   type: "Political statement",
-  verdict: "No, not as stated.",
+  verdict: "Misleading as stated",
   verdictSummary:
     "The statement makes a sweeping claim about Islam and then presents confrontation as the only possible response. The historical record and the structure of the argument do not justify that level of certainty.",
   scoreThemes: [
     {
       id: "factual",
-      label: "Factual grounding",
+      label: "Based on facts",
       score: 25,
       summary: "Weak support for the statement's broad factual premise.",
       rationale: [
@@ -64,7 +64,7 @@ export const claimExample: ClaimAnalysis = {
     },
     {
       id: "evidence",
-      label: "Evidence strength",
+      label: "Evidence quality",
       score: 20,
       summary: "Little evidence supports the universal wording used.",
       rationale: [
@@ -97,7 +97,7 @@ export const claimExample: ClaimAnalysis = {
     },
     {
       id: "context",
-      label: "Context completeness",
+      label: "Enough context",
       score: 18,
       summary: "Important historical and theological variation is omitted.",
       rationale: [
@@ -130,8 +130,8 @@ export const claimExample: ClaimAnalysis = {
     },
     {
       id: "rhetoric",
-      label: "Rhetorical loading",
-      score: 92,
+      label: "Fair wording",
+      score: 8,
       summary: "The wording strongly pushes the reader toward one conclusion.",
       rationale: [
         "The phrase 'no other choice' presents a false dilemma.",
@@ -176,8 +176,7 @@ export const claimExample: ClaimAnalysis = {
         "The phrase calls for opposition while leaving the form of that opposition unclear."
     }
   ],
-  defensibleRewrite:
-    "Some Islamic movements and authorities resist particular kinds of reform, but Islamic history also contains substantial traditions of reform and reinterpretation.",
+  defensibleRewrite: "",
   plainEnglish:
     "Islam is too broad and diverse to reasonably claim that it cannot change. The statement takes a disputed idea, presents it as certain, and then uses that certainty to argue that confrontation is unavoidable.",
   bottomLine:

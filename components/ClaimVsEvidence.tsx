@@ -1,13 +1,17 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
+import { ConfidenceEvidencePanel } from "@/components/ConfidenceEvidencePanel";
 import { Reveal } from "@/components/Reveal";
+import type { Source } from "@/types/claim";
 
 type Props = {
   claimConfidence: number;
   evidenceSupport: number;
   summary: string;
+  sources: Source[];
 };
 
 function getBalanceLabel(balance: number) {
@@ -20,15 +24,35 @@ function getBalanceLabel(balance: number) {
   return "Strongly cautious";
 }
 
+function uniqueJudgementSources(sources: Source[]) {
+  const seen = new Set<string>();
+
+  return sources.filter((source) => {
+    // Provenance verifies that somebody said something; it does not help judge
+    // whether the proposition is supported.
+    if (source.role === "Verifies") return false;
+    if (seen.has(source.url)) return false;
+
+    seen.add(source.url);
+    return true;
+  });
+}
+
 export function ClaimVsEvidence({
   claimConfidence,
   evidenceSupport,
   summary,
+  sources,
 }: Props) {
+  const [showEvidence, setShowEvidence] = useState(false);
   const balance = evidenceSupport - claimConfidence;
   const markerPosition = ((balance + 100) / 200) * 100;
   const label = getBalanceLabel(balance);
   const reduceMotion = useReducedMotion();
+  const judgementSources = useMemo(
+    () => uniqueJudgementSources(sources),
+    [sources]
+  );
 
   return (
     <section className="section confidence-section">
@@ -74,8 +98,34 @@ export function ClaimVsEvidence({
           <div className="balance-summary">
             <strong>{label}</strong>
             <p>{summary}</p>
+
+            {judgementSources.length > 0 ? (
+              <button
+                type="button"
+                className="balance-evidence-action"
+                aria-expanded={showEvidence}
+                onClick={() => setShowEvidence((current) => !current)}
+              >
+                {showEvidence ? "Hide supporting evidence" : "View supporting evidence"}
+                <span>
+                  {judgementSources.length} source
+                  {judgementSources.length === 1 ? "" : "s"}
+                </span>
+              </button>
+            ) : (
+              <p className="balance-no-evidence">
+                No web source was used directly for this comparison.
+              </p>
+            )}
           </div>
         </div>
+
+        {showEvidence && judgementSources.length > 0 && (
+          <ConfidenceEvidencePanel
+            sources={judgementSources}
+            onClose={() => setShowEvidence(false)}
+          />
+        )}
 
         <div className="balance-scale" aria-label={`Confidence balance ${balance}`}>
           <div className="balance-axis" />

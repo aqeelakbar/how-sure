@@ -8,7 +8,7 @@ type Props = {
   onClose: () => void;
 };
 
-function SourceCard({ source }: { source: Source }) {
+export function SourceCard({ source }: { source: Source }) {
   return (
     <a
       href={source.url}

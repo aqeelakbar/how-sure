@@ -347,6 +347,7 @@ TRUST RULES:
 9. annotation.phrase MUST be an exact substring from the original statement.
 10. If an attribution wrapper is explicitly present, use that attribution as the speaker. Otherwise do not infer a speaker from wording alone; use "Source not provided".
 11. If the evidence for one detected claim is weak but another is strong, say so explicitly rather than averaging away the difference.
+12. certaintyGapSummary must be understandable on its own. If it says that evidence, research, official figures, data or sources show something, that statement must be supported by at least one source attached to the factual, evidence or context score. Do not rely only on a Verifies/provenance source.
 
 SOURCE ROLES:
 - Supports

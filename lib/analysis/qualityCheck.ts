@@ -200,5 +200,22 @@ export function checkAnalysisQuality({
     });
   }
 
+  const judgementSources = analysis.scoreThemes
+    .flatMap((theme) => theme.sources)
+    .filter((source) => source.role !== "Verifies");
+
+  const evidenceLanguage = /\b(evidence shows|evidence suggests|research shows|research suggests|official (?:figures|data|statistics) show|sources show)\b/i;
+
+  if (
+    evidenceLanguage.test(analysis.certaintyGapSummary) &&
+    judgementSources.length === 0
+  ) {
+    issues.push({
+      code: "confidence_summary_without_sources",
+      message:
+        "The Claim vs evidence explanation makes an evidence-based statement but provides no judgement source the user can inspect.",
+    });
+  }
+
   return issues;
 }

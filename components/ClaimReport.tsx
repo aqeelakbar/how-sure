@@ -165,6 +165,7 @@ export function ClaimReport({
           claimConfidence={data.rhetoricalCertainty}
           evidenceSupport={data.evidenceCertainty}
           summary={data.certaintyGapSummary}
+          sources={data.scoreThemes.flatMap((theme) => theme.sources)}
         />
 
         <StatementAnatomy

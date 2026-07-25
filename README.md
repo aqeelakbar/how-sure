@@ -1374,3 +1374,11 @@ Save analysis + operational record
   ↓
 Return shareable URL
 ```
+
+## V3.0.2 — Claim vs evidence traceability
+
+The confidence-balance explanation now includes a **View supporting evidence** action whenever judgement sources are available.
+
+The panel deduplicates sources across the four score dimensions, excludes `Verifies` sources because attribution does not establish truth, and shows each source's role, quality, publisher and relevance.
+
+The quality harness also flags phrases such as “evidence shows” when no non-provenance source is available for the user to inspect.
