@@ -1642,3 +1642,24 @@ app/icon.svg
 The favicon keeps the Brain Circuit visual direction but is now a static SVG
 metadata asset. `lucide-react` remains installed because the application still
 uses Lucide icons in client UI such as Share analysis and the loading state.
+
+
+# V3.2.2 — public analysis activity
+
+The homepage now includes a quiet activity signal beneath the analysis
+disclaimer:
+
+```text
+128 claims examined against live evidence · 943 sources inspected
+```
+
+## Counting rules
+
+- Claims are counted once by normalized claim hash.
+- If the same claim was re-analysed under a newer pipeline version, only its
+  latest saved assessment is counted.
+- Sources inspected is the cumulative number of retrieved sources attached to
+  those latest assessments.
+- The stats only include saved assessments whose quality status is passed.
+- The public stats request is cached for 60 seconds and never blocks the claim
+  input from rendering.

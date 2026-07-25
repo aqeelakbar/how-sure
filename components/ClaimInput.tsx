@@ -1,5 +1,7 @@
 "use client";
 
+import { PublicAnalysisStats } from "@/components/PublicAnalysisStats";
+
 type Props = {
   value: string;
   onChange: (value: string) => void;
@@ -48,6 +50,8 @@ export function ClaimInput({ value, onChange, onAnalyse, error }: Props) {
             analyses are saved so they can be shared and reused without another
             search or AI request.
           </p>
+
+          <PublicAnalysisStats />
         </div>
       </div>
     </section>

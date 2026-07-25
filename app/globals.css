@@ -3910,3 +3910,29 @@ svg {
     font-size: 9px;
   }
 }
+
+
+/* V3.2.2 — quiet public activity signal */
+.public-analysis-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 9px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.public-analysis-stats strong {
+  color: var(--ink);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .public-analysis-stats {
+    gap: 4px 7px;
+    margin-top: 10px;
+    font-size: 9px;
+  }
+}

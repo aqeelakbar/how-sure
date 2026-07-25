@@ -142,3 +142,51 @@ export async function saveAnalysis({
 
   return rows[0].id;
 }
+
+
+export type PublicAnalysisStats = {
+  claimsExamined: number;
+  sourcesInspected: number;
+};
+
+export async function getPublicAnalysisStats(): Promise<PublicAnalysisStats> {
+  const sql = getDb();
+
+  // Count each normalized claim once, using its most recently saved analysis.
+  // This avoids inflating the public total when the same claim was re-analysed
+  // under a newer pipeline version.
+  const rows = await sql<{
+    claims_examined: number;
+    sources_inspected: number;
+  }[]>`
+    with latest_per_claim as (
+      select distinct on (claim_hash)
+        claim_hash,
+        verification,
+        updated_at
+      from analyses
+      where coalesce(verification->>'qualityStatus', 'passed') = 'passed'
+      order by claim_hash, updated_at desc
+    )
+    select
+      count(*)::int as claims_examined,
+      coalesce(
+        sum(
+          case
+            when (verification->>'retrievedSourceCount') ~ '^[0-9]+$'
+              then (verification->>'retrievedSourceCount')::int
+            else 0
+          end
+        ),
+        0
+      )::int as sources_inspected
+    from latest_per_claim
+  `;
+
+  const row = rows[0];
+
+  return {
+    claimsExamined: row?.claims_examined ?? 0,
+    sourcesInspected: row?.sources_inspected ?? 0,
+  };
+}
