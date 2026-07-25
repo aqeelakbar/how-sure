@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { claimAnalysisSchema } from "@/lib/claimSchema";
 import { extractJson } from "@/lib/ai/json";
 import {
@@ -54,11 +54,37 @@ async function retrieveForClaims(
 ): Promise<RetrievedSource[]> {
   const sourceMap = new Map<string, RetrievedSource>();
 
-  // Keep Tavily usage bounded for long statements.
+  // Keep Tavily usage bounded for long statements, but run independent
+  // searches concurrently instead of waiting for each one in sequence.
   const searchClaims = claims.slice(0, 5);
+  const searches = await Promise.allSettled(
+    searchClaims.map(async (claim) => ({
+      claim,
+      results: await searchEvidence(claim.text, apiKey),
+    }))
+  );
 
-  for (const claim of searchClaims) {
-    const results = await searchEvidence(claim.text, apiKey);
+  const successfulSearches = searches.filter(
+    (
+      result
+    ): result is PromiseFulfilledResult<{
+      claim: RetrievalClaim;
+      results: RetrievedSource[];
+    }> => result.status === "fulfilled"
+  );
+
+  // Preserve the previous failure behaviour when every search fails, while
+  // allowing useful partial evidence when only one subclaim search fails.
+  if (successfulSearches.length === 0) {
+    const firstFailure = searches.find(
+      (result): result is PromiseRejectedResult =>
+        result.status === "rejected"
+    );
+    throw firstFailure?.reason ?? new Error("Evidence retrieval failed.");
+  }
+
+  for (const search of successfulSearches) {
+    const { claim, results } = search.value;
 
     for (const result of results) {
       const existing = sourceMap.get(result.url);
@@ -171,6 +197,10 @@ function normaliseAndParseAnalysis({
 export async function POST(request: Request) {
   const requestId = newRequestId();
   const startedAt = Date.now();
+  let cacheLookupMs = 0;
+  let retrievalMs = 0;
+  let generationMs = 0;
+  let persistenceMs = 0;
   let failureStage = "request";
   let currentClaimHash: string | null = null;
 
@@ -185,9 +215,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (claim.length > 1200) {
+    if (claim.length > 500) {
       return NextResponse.json(
-        { error: "Please keep the claim under 1,200 characters." },
+        { error: "Please keep the claim to 500 characters or fewer." },
         { status: 400 }
       );
     }
@@ -207,7 +237,9 @@ export async function POST(request: Request) {
     currentClaimHash = hashClaim(claim);
 
     failureStage = "server_cache_lookup";
+    const cacheLookupStartedAt = Date.now();
     const cached = await findServerCachedAnalysis(currentClaimHash);
+    cacheLookupMs = Date.now() - cacheLookupStartedAt;
 
     if (cached) {
       const cachedVerification: Verification = {
@@ -220,42 +252,54 @@ export async function POST(request: Request) {
         pipelineVersion: PIPELINE_VERSION,
       };
 
-      await recordAnalysisRun({
-        requestId,
-        claimHash: currentClaimHash,
-        analysisId: cached.id,
-        outcome: "server_cache_hit",
-        durationMs: Date.now() - startedAt,
-        retrievedSourceCount: cached.verification.retrievedSourceCount ?? null,
-        citedSourceCount: cached.verification.citedSourceCount ?? null,
-        repairAttempted: cached.verification.repairAttempted ?? false,
-        providerRetryCount:
-          (cached.verification.initialProviderRetryCount ?? 0) +
-          (cached.verification.repairProviderRetryCount ?? 0),
-        retrievalFallbackAttempted:
-          cached.verification.retrievalFallbackAttempted ?? false,
-        retrievalQuality: cached.verification.retrievalQuality ?? null,
-      });
+      after(() =>
+        recordAnalysisRun({
+          requestId,
+          claimHash: currentClaimHash,
+          analysisId: cached.id,
+          outcome: "server_cache_hit",
+          durationMs: Date.now() - startedAt,
+          retrievedSourceCount:
+            cached.verification.retrievedSourceCount ?? null,
+          citedSourceCount: cached.verification.citedSourceCount ?? null,
+          repairAttempted: cached.verification.repairAttempted ?? false,
+          providerRetryCount:
+            (cached.verification.initialProviderRetryCount ?? 0) +
+            (cached.verification.repairProviderRetryCount ?? 0),
+          retrievalFallbackAttempted:
+            cached.verification.retrievalFallbackAttempted ?? false,
+          retrievalQuality: cached.verification.retrievalQuality ?? null,
+        })
+      );
 
-      return NextResponse.json({
-        analysisId: cached.id,
-        sharePath: `/analysis/${cached.id}`,
-        analysis: cached.analysis,
-        verification: cachedVerification,
-      });
+      return NextResponse.json(
+        {
+          analysisId: cached.id,
+          sharePath: `/analysis/${cached.id}`,
+          analysis: cached.analysis,
+          verification: cachedVerification,
+        },
+        {
+          headers: {
+            "Server-Timing": `cache;dur=${cacheLookupMs}, total;dur=${Date.now() - startedAt}`,
+          },
+        }
+      );
     }
 
     failureStage = "rate_limit";
     const rateLimit = await consumeFreshAnalysisLimit(request);
     if (!rateLimit.allowed) {
-      await recordAnalysisRun({
-        requestId,
-        claimHash: currentClaimHash,
-        outcome: "error",
-        durationMs: Date.now() - startedAt,
-        failureStage,
-        errorCode: rateLimit.code,
-      });
+      after(() =>
+        recordAnalysisRun({
+          requestId,
+          claimHash: currentClaimHash,
+          outcome: "error",
+          durationMs: Date.now() - startedAt,
+          failureStage,
+          errorCode: rateLimit.code,
+        })
+      );
 
       return NextResponse.json(
         { code: rateLimit.code, stage: failureStage, error: rateLimit.message },
@@ -297,10 +341,12 @@ export async function POST(request: Request) {
 
     // Multiple focused Tavily searches, still only one Gemini request.
     failureStage = "evidence_retrieval";
+    const retrievalStartedAt = Date.now();
     const retrievedSources = await retrieveForClaims(
       detectedClaims,
       tavilyApiKey
     );
+    retrievalMs = Date.now() - retrievalStartedAt;
 
     const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
@@ -461,6 +507,7 @@ Produce 2–5 rationale items per score and 2–8 useful annotations.
 `;
 
     failureStage = "initial_generation";
+    const generationStartedAt = Date.now();
     const initialGeneration = await withProviderRetry(
       () =>
         ai.models.generateContent({
@@ -471,6 +518,7 @@ Produce 2–5 rationale items per score and 2–8 useful annotations.
     );
 
     const response = initialGeneration.value;
+    generationMs = Date.now() - generationStartedAt;
     const initialProviderRetryCount = initialGeneration.retryCount;
 
     if (!response.text) {
@@ -803,14 +851,17 @@ Return the full JSON analysis object only.
     };
 
     failureStage = "persistence";
+    const persistenceStartedAt = Date.now();
     const analysisId = await saveAnalysis({
       claim: claim.trim(),
       claimHash: currentClaimHash,
       analysis: finalAnalysis,
       verification,
     });
+    persistenceMs = Date.now() - persistenceStartedAt;
 
-    await recordAnalysisRun({
+    after(() =>
+      recordAnalysisRun({
       requestId,
       claimHash: currentClaimHash,
       analysisId,
@@ -821,16 +872,30 @@ Return the full JSON analysis object only.
       repairAttempted,
       providerRetryCount:
         initialProviderRetryCount + repairProviderRetryCount,
-      retrievalFallbackAttempted,
-      retrievalQuality,
-    });
+        retrievalFallbackAttempted,
+        retrievalQuality,
+      })
+    );
 
-    return NextResponse.json({
-      analysisId,
-      sharePath: `/analysis/${analysisId}`,
-      analysis: finalAnalysis,
-      verification,
-    });
+    return NextResponse.json(
+      {
+        analysisId,
+        sharePath: `/analysis/${analysisId}`,
+        analysis: finalAnalysis,
+        verification,
+      },
+      {
+        headers: {
+          "Server-Timing": [
+            `cache;dur=${cacheLookupMs}`,
+            `retrieval;dur=${retrievalMs}`,
+            `generation;dur=${generationMs}`,
+            `persistence;dur=${persistenceMs}`,
+            `total;dur=${Date.now() - startedAt}`,
+          ].join(", "),
+        },
+      }
+    );
   } catch (error) {
     console.error("Analyse claim error:", error);
 
@@ -857,14 +922,16 @@ Return the full JSON analysis object only.
         "The AI allowance has been reached. Existing shared analyses still work; new claims can be analysed again when capacity is available.";
     }
 
-    await recordAnalysisRun({
-      requestId,
-      claimHash: currentClaimHash,
-      outcome: "error",
-      durationMs: Date.now() - startedAt,
-      failureStage,
-      errorCode: code,
-    });
+    after(() =>
+      recordAnalysisRun({
+        requestId,
+        claimHash: currentClaimHash,
+        outcome: "error",
+        durationMs: Date.now() - startedAt,
+        failureStage,
+        errorCode: code,
+      })
+    );
 
     const detail = error instanceof Error ? error.message : "Unknown analysis error";
 

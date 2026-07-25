@@ -80,6 +80,7 @@ export async function searchEvidence(
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
+    signal: AbortSignal.timeout(12_000),
     body: JSON.stringify({
       query,
       search_depth: "basic",

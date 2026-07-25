@@ -1483,3 +1483,62 @@ the sticky-header `Analyse another claim` CTA:
 
 `Copy link` remains the outlined secondary action, while
 `Analyse another claim` remains the filled primary action.
+
+
+# V3.1.0 — performance foundation
+
+This release improves fresh-analysis latency without removing evidence searches
+or weakening the quality harness.
+
+## Parallel evidence retrieval
+
+When a statement contains several testable claims, Tavily searches now run in
+parallel rather than one after another.
+
+Before:
+
+```text
+search C1 → wait → search C2 → wait → search C3 → wait
+```
+
+Now:
+
+```text
+search C1
+search C2  → wait for the group
+search C3
+```
+
+If one subclaim search fails but the others succeed, How Sure? continues with
+the useful evidence. It still fails safely when every search fails.
+
+## Telemetry no longer delays the result
+
+The `analysis_runs` observability insert is scheduled with Next.js `after()`.
+The response can be returned to the user before that non-critical logging write
+finishes.
+
+Saving the analysis itself remains synchronous so a returned share link always
+points to a persisted result.
+
+## Server timing
+
+The `/api/analyse` response now exposes a `Server-Timing` header with:
+
+- cache lookup
+- evidence retrieval
+- Gemini generation
+- persistence
+- total server time
+
+Inspect the request in the browser Network panel to identify the dominant stage
+using production data.
+
+## Remote timeout
+
+Each Tavily request has a 12-second timeout so one remote search cannot hold the
+whole analysis open indefinitely.
+
+## Character limit
+
+The server-side limit is now aligned with the interface at 500 characters.

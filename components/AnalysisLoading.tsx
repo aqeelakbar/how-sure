@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 
 const steps = [
-  "Searching for current evidence",
+  "Searching several evidence paths at once",
   "Comparing the claim with retrieved sources",
   "Checking context and rhetorical certainty",
   "Checking the assessment before showing it",
