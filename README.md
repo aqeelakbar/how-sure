@@ -1542,3 +1542,26 @@ whole analysis open indefinitely.
 ## Character limit
 
 The server-side limit is now aligned with the interface at 500 characters.
+
+
+# V3.1.1 — critical-thinking favicon
+
+How Sure? now uses Lucide's `BrainCircuit` icon as its favicon.
+
+The icon represents:
+
+- critical thinking
+- connected evidence
+- AI-assisted analysis
+
+It is rendered as a high-contrast black mark on the product's warm off-white
+background so it remains legible at browser-tab sizes.
+
+The favicon is generated through Next.js `app/icon.tsx`, so Next.js includes it
+in the page metadata automatically.
+
+A new dependency is included:
+
+```bash
+npm install lucide-react
+```
