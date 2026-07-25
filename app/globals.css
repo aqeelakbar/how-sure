@@ -3344,3 +3344,155 @@ svg {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* V3.0.5 — new-claim action in both normal and sticky report headers */
+.report-new-claim-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 10px 15px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  font: inherit;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.report-new-claim-action:hover {
+  opacity: .82;
+}
+
+.report-new-claim-action:focus-visible,
+.sticky-new-claim-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (max-width: 780px) {
+  .report-new-claim-action {
+    min-height: 34px;
+    padding: 8px 10px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 520px) {
+  .report-nav {
+    height: auto;
+    min-height: 72px;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .report-nav-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .report-new-claim-action {
+    order: 1;
+  }
+
+  .share-action {
+    order: 2;
+  }
+}
+
+
+/* V3.0.6 — mobile evidence expands directly beneath its score card */
+.score-card-group {
+  min-width: 0;
+}
+
+.mobile-card-evidence {
+  display: none;
+}
+
+.desktop-score-evidence {
+  display: block;
+}
+
+.evidence-panel-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.evidence-close--footer {
+  position: static;
+  min-height: 40px;
+  padding: 10px 14px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.evidence-close--footer:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+@media (max-width: 760px) {
+  .score-grid {
+    display: block;
+  }
+
+  .score-card-group {
+    margin-bottom: 10px;
+  }
+
+  .score-card-group .score-card {
+    margin-bottom: 0;
+  }
+
+  .mobile-card-evidence {
+    display: block;
+  }
+
+  .desktop-score-evidence {
+    display: none;
+  }
+
+  .mobile-card-evidence .evidence-panel {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 20px;
+  }
+
+  .mobile-card-evidence .evidence-panel-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .mobile-card-evidence .evidence-panel-header > .evidence-close {
+    display: none;
+  }
+
+  .mobile-card-evidence .evidence-panel-score {
+    align-self: start;
+  }
+
+  .mobile-card-evidence .evidence-panel-body {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-card-evidence .source-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-card-evidence .evidence-panel-footer {
+    justify-content: stretch;
+    margin-top: 18px;
+  }
+
+  .mobile-card-evidence .evidence-close--footer {
+    width: 100%;
+  }
+}

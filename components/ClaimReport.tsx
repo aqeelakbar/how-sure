@@ -74,6 +74,14 @@ export function ClaimReport({
           How Sure?
         </button>
         <div className="report-nav-actions">
+          <button
+            type="button"
+            className="report-new-claim-action"
+            onClick={onReset}
+          >
+            Analyse another claim
+          </button>
+
           {sharePath && (
             <button
               className="share-action"
@@ -158,26 +166,43 @@ export function ClaimReport({
           </Reveal>
 
           <div className="score-grid">
-            {data.scoreThemes.map((theme, index) => (
-              <Reveal key={theme.id} delay={index * 0.08}>
-                <ScoreCard
-                  theme={theme}
-                  active={selectedScore === theme.id}
-                  onSelect={() =>
-                    setSelectedScore((current) =>
-                      current === theme.id ? null : theme.id
-                    )
-                  }
-                />
-              </Reveal>
-            ))}
+            {data.scoreThemes.map((theme, index) => {
+              const active = selectedScore === theme.id;
+
+              return (
+                <Reveal key={theme.id} delay={index * 0.08}>
+                  <div className="score-card-group">
+                    <ScoreCard
+                      theme={theme}
+                      active={active}
+                      onSelect={() =>
+                        setSelectedScore((current) =>
+                          current === theme.id ? null : theme.id
+                        )
+                      }
+                    />
+
+                    {active && (
+                      <div className="mobile-card-evidence">
+                        <EvidencePanel
+                          theme={theme}
+                          onClose={() => setSelectedScore(null)}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
 
           {selectedTheme && (
-            <EvidencePanel
-              theme={selectedTheme}
-              onClose={() => setSelectedScore(null)}
-            />
+            <div className="desktop-score-evidence">
+              <EvidencePanel
+                theme={selectedTheme}
+                onClose={() => setSelectedScore(null)}
+              />
+            </div>
           )}
         </section>
 

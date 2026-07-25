@@ -123,6 +123,16 @@ export function EvidencePanel({ theme, onClose }: Props) {
           )}
         </div>
       </div>
+
+      <div className="evidence-panel-footer">
+        <button
+          type="button"
+          className="evidence-close evidence-close--footer"
+          onClick={onClose}
+        >
+          Close evidence
+        </button>
+      </div>
     </motion.section>
   );
 }

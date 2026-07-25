@@ -1425,3 +1425,28 @@ assessment and lets the reader open each original source.
 
 Extra inherited dividers inside the expanded assessment area have been removed so
 there is one clear outer boundary rather than several competing horizontal rules.
+
+
+# V3.0.5 — new claim access
+
+`Analyse another claim` is now available in both report navigation states:
+
+- the normal header at the top of the report
+- the sticky claim header shown after scrolling
+
+Both actions return the user to the claim input. The normal header action uses
+the same primary visual treatment as the sticky action, while `Copy link`
+remains secondary.
+
+
+# V3.0.6 — card-local mobile evidence
+
+On screens up to 760px wide, opening a score now inserts its evidence directly
+beneath that score card instead of after the full four-card group.
+
+Desktop behaviour remains unchanged: the selected evidence panel appears beneath
+the full score grid.
+
+Every evidence panel now also ends with a clear `Close evidence` action. On
+mobile, this bottom action spans the available width so users do not need to
+scroll back to the top of a long evidence section to close it.
