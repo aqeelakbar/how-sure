@@ -1,0 +1,26 @@
+export type Verification = {
+  status: string;
+  label: string;
+  detail: string;
+  model?: string;
+  searchProvider?: string;
+  retrievedSourceCount?: number;
+  citedSourceCount?: number;
+  detectedClaimCount?: number;
+  attributionDetected?: boolean;
+  proposition?: string;
+  qualityStatus?: "passed" | "low";
+  qualityIssueCount?: number;
+  repairAttempted?: boolean;
+  repairSucceeded?: boolean;
+  initialProviderRetryCount?: number;
+  repairProviderRetryCount?: number;
+  retrievalFallbackAttempted?: boolean;
+  retrievalFallbackAddedSources?: number;
+  localQualityFixes?: Array<{ code: string; message: string }>;
+  retrievalQuality?: "none" | "insufficient" | "limited" | "usable";
+  initialQualityIssues?: Array<{ code: string; message: string }>;
+  finalQualityIssues?: Array<{ code: string; message: string }>;
+  pipelineVersion?: string;
+  cache?: "fresh" | "server";
+};
