@@ -1684,3 +1684,18 @@ ThinkingLevel.MEDIUM
 ```
 
 for the initial/fallback and repair passes respectively.
+
+
+# V3.2.4 — clearer input affordance
+
+The default starter claim now appears in the muted text colour so it reads as
+example content rather than user-entered content.
+
+On screens wider than 640px, the textarea is focused on page load and the caret
+is placed at the end of the starter claim.
+
+On mobile, autofocus is intentionally disabled so the software keyboard does not
+open as soon as the page loads.
+
+As soon as the user edits the claim, the textarea switches back to the normal
+text colour.

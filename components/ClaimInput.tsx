@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { PublicAnalysisStats } from "@/components/PublicAnalysisStats";
 
 type Props = {
@@ -10,6 +11,22 @@ type Props = {
 };
 
 export function ClaimInput({ value, onChange, onAnalyse, error }: Props) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [hasEdited, setHasEdited] = useState(false);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    if (isMobile) return;
+
+    textarea.focus({ preventScroll: true });
+
+    const end = textarea.value.length;
+    textarea.setSelectionRange(end, end);
+  }, []);
+
   return (
     <section className="input-page">
       <div className="input-shell">
@@ -27,9 +44,14 @@ export function ClaimInput({ value, onChange, onAnalyse, error }: Props) {
 
         <div className="input-block">
           <textarea
+            ref={textareaRef}
+            className={hasEdited ? undefined : "is-example"}
             value={value}
             maxLength={500}
-            onChange={(event) => onChange(event.target.value)}
+            onChange={(event) => {
+              setHasEdited(true);
+              onChange(event.target.value);
+            }}
             aria-label="Claim to analyse"
           />
           <div className="input-actions">

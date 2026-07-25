@@ -3936,3 +3936,14 @@ svg {
     font-size: 9px;
   }
 }
+
+
+/* V3.2.4 — starter-claim affordance */
+.input-block textarea.is-example {
+  color: var(--muted);
+}
+
+.input-block textarea:focus,
+.input-block textarea:focus-visible {
+  outline: none;
+}
