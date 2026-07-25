@@ -1699,3 +1699,17 @@ open as soon as the page loads.
 
 As soon as the user edits the claim, the textarea switches back to the normal
 text colour.
+
+
+# V3.2.5 — About the creator
+
+The About panel now includes a final creator section:
+
+- Aqeel Akbar
+- View portfolio → https://www.aqeelakbar.me
+- LinkedIn → https://www.linkedin.com/in/akbaraqeel
+
+The portfolio is the primary action. LinkedIn is secondary.
+
+GitHub is intentionally omitted until the exact public How Sure? repository URL
+is confirmed.

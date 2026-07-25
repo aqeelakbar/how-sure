@@ -10,6 +10,7 @@ const sections = [
   ["checks", "How results are checked"],
   ["limits", "What it cannot do"],
   ["built", "How it was built"],
+  ["creator", "About the creator"],
 ] as const;
 
 export function AboutHowSure() {
@@ -242,6 +243,33 @@ export function AboutHowSure() {
                   <div className="about-closing">
                     <p>How Sure? does not ask you to trust it.</p>
                     <h2>It helps you decide how sure you should be.</h2>
+                  </div>
+                </section>
+
+                <section id="about-creator" className="about-creator">
+                  <p className="about-eyebrow">About the creator</p>
+                  <h2>Designed and built by Aqeel Akbar.</h2>
+                  <p>
+                    Aqeel is a UX engineer focused on making complex systems
+                    easier to understand, question and use.
+                  </p>
+                  <div className="about-creator-actions">
+                    <a
+                      href="https://www.aqeelakbar.me"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="about-creator-primary"
+                    >
+                      View portfolio
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/akbaraqeel"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="about-creator-secondary"
+                    >
+                      LinkedIn
+                    </a>
                   </div>
                 </section>
               </div>

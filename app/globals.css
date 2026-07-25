@@ -3947,3 +3947,57 @@ svg {
 .input-block textarea:focus-visible {
   outline: none;
 }
+
+
+/* V3.2.5 — creator section */
+.about-creator {
+  padding-bottom: 48px;
+}
+
+.about-creator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.about-creator-actions a {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.about-creator-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.about-creator-secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+.about-creator-actions a:hover {
+  opacity: .8;
+}
+
+@media (max-width: 640px) {
+  .about-creator-actions {
+    align-items: stretch;
+  }
+
+  .about-creator-actions a {
+    min-height: 32px;
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+}
