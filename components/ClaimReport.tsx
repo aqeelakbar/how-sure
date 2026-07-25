@@ -12,6 +12,7 @@ import { StickyClaimHeader } from "@/components/StickyClaimHeader";
 import { ProvenancePanel } from "@/components/ProvenancePanel";
 import { Methodology } from "@/components/Methodology";
 import { ClaimsDetected } from "@/components/ClaimsDetected";
+import { AssessmentSources } from "@/components/AssessmentSources";
 
 type Props = {
   claim: string;
@@ -125,7 +126,7 @@ export function ClaimReport({
             <summary>
               <span>About this assessment</span>
               <span className="assessment-details-hint">
-                Sources, claim breakdown and quality checks
+                Open sources, claim breakdown and quality checks
               </span>
             </summary>
 
@@ -134,6 +135,8 @@ export function ClaimReport({
                 label={verificationLabel}
                 detail={verificationDetail}
               />
+
+              <AssessmentSources themes={data.scoreThemes} />
               {shared && (
                 <p className="shared-analysis-note">
                   This is a saved analysis. The sources and assessment are shown as they were recorded.

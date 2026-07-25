@@ -1413,3 +1413,15 @@ This avoids implying that the user forgot a required step.
 Once the original claim leaves the screen, the sticky claim header includes a
 prominent `Analyse another claim` action. The quiet duplicate action has been
 removed from the normal report header.
+
+# V3.0.4 — clearer assessment sources
+
+The expanded **About this assessment** area now has a dedicated, clearly interactive
+**View cited sources** control. It states how many sources were used and expands a
+source list inside the assessment details.
+
+The source list explains that sources may support, challenge or contextualise the
+assessment and lets the reader open each original source.
+
+Extra inherited dividers inside the expanded assessment area have been removed so
+there is one clear outer boundary rather than several competing horizontal rules.
