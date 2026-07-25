@@ -74,8 +74,8 @@ export function ProvenancePanel({ claim, speaker }: Props) {
       <div className="context-row-content">
         <div className="provenance-header">
           <div className="provenance-unknown-row">
-            <strong>Source not provided</strong>
-            <span>Attribution is not inferred from wording alone.</span>
+            <strong>No source added</strong>
+            <span>That is optional. How Sure? searched for evidence independently.</span>
           </div>
 
           <button

@@ -65,6 +65,7 @@ export function ClaimReport({
         claim={claim}
         speaker={data.speaker}
         visible={showStickyClaim}
+        onReset={onReset}
       />
 
       <header className="report-nav">
@@ -90,9 +91,7 @@ export function ClaimReport({
               {shareLabel}
             </button>
           )}
-          <button className="text-button" onClick={onReset}>
-            Analyse another claim
-          </button>
+
         </div>
       </header>
 
@@ -102,26 +101,16 @@ export function ClaimReport({
             <p className="section-label">Original claim</p>
             <blockquote>“{claim}”</blockquote>
             <div className="claim-meta">
-              <span>{data.speaker}</span>
+              <span>
+                {data.speaker.trim().toLowerCase() === "source not provided" ||
+                data.speaker.trim().toLowerCase() === "unknown / not provided"
+                  ? "Source optional · evidence searched independently"
+                  : data.speaker}
+              </span>
               <span>{data.type}</span>
             </div>
-
-            <VerificationNotice
-              label={verificationLabel}
-              detail={verificationDetail}
-            />
-            {shared && (
-              <p className="shared-analysis-note">
-                This is a saved analysis. The sources and assessment are shown as they were recorded.
-              </p>
-            )}
           </Reveal>
         </section>
-
-        <div className="claim-context-stack">
-          <ProvenancePanel claim={claim} speaker={data.speaker} />
-          <ClaimsDetected claims={data.detectedClaims} />
-        </div>
 
         <section className="verdict-section section">
           <Reveal>
@@ -129,6 +118,34 @@ export function ClaimReport({
             <h1>{data.verdict}</h1>
             <p className="verdict-summary">{data.verdictSummary}</p>
           </Reveal>
+        </section>
+
+        <section className="assessment-details-section">
+          <details className="assessment-details">
+            <summary>
+              <span>About this assessment</span>
+              <span className="assessment-details-hint">
+                Sources, claim breakdown and quality checks
+              </span>
+            </summary>
+
+            <div className="assessment-details-content">
+              <VerificationNotice
+                label={verificationLabel}
+                detail={verificationDetail}
+              />
+              {shared && (
+                <p className="shared-analysis-note">
+                  This is a saved analysis. The sources and assessment are shown as they were recorded.
+                </p>
+              )}
+
+              <div className="claim-context-stack">
+                <ProvenancePanel claim={claim} speaker={data.speaker} />
+                <ClaimsDetected claims={data.detectedClaims} />
+              </div>
+            </div>
+          </details>
         </section>
 
         <section className="section score-section">

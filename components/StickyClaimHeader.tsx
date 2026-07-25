@@ -7,6 +7,7 @@ type Props = {
   claim: string;
   speaker: string;
   visible: boolean;
+  onReset: () => void;
 };
 
 function sourceLabel(speaker: string) {
@@ -17,13 +18,18 @@ function sourceLabel(speaker: string) {
     normalized === "unknown / not provided" ||
     normalized === "source not provided"
   ) {
-    return "Source not provided";
+    return "Source optional";
   }
 
   return speaker;
 }
 
-export function StickyClaimHeader({ claim, speaker, visible }: Props) {
+export function StickyClaimHeader({
+  claim,
+  speaker,
+  visible,
+  onReset,
+}: Props) {
   const [expanded, setExpanded] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -58,6 +64,14 @@ export function StickyClaimHeader({ claim, speaker, visible }: Props) {
               <span className="sticky-claim-action">
                 {expanded ? "Collapse" : "View full claim"}
               </span>
+            </button>
+
+            <button
+              type="button"
+              className="sticky-new-claim-action"
+              onClick={onReset}
+            >
+              Analyse another claim
             </button>
           </div>
         </motion.div>

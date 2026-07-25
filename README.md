@@ -1375,10 +1375,41 @@ Save analysis + operational record
 Return shareable URL
 ```
 
-## V3.0.2 — Claim vs evidence traceability
+# V3.0.3 — claim-first report hierarchy
 
-The confidence-balance explanation now includes a **View supporting evidence** action whenever judgement sources are available.
+This release responds to usability feedback from the live product.
 
-The panel deduplicates sources across the four score dimensions, excludes `Verifies` sources because attribution does not establish truth, and shows each source's role, quality, publisher and relevance.
+## Changes
 
-The quality harness also flags phrases such as “evidence shows” when no non-provenance source is available for the user to inspect.
+### Result closer to the claim
+
+The opening order is now:
+
+```text
+Original claim
+↓
+Verdict and short explanation
+↓
+About this assessment
+```
+
+Source provenance, detected claims and quality metadata no longer delay the main
+answer. They are available inside a compact disclosure immediately after the
+verdict.
+
+### Source is clearly optional
+
+Unknown-source wording now says:
+
+```text
+No source added
+That is optional. How Sure? searched for evidence independently.
+```
+
+This avoids implying that the user forgot a required step.
+
+### Analyse another claim in the sticky header
+
+Once the original claim leaves the screen, the sticky claim header includes a
+prominent `Analyse another claim` action. The quiet duplicate action has been
+removed from the normal report header.

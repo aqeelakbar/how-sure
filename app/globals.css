@@ -3084,3 +3084,124 @@ svg {
   .confidence-evidence-header { grid-template-columns: 1fr; gap: 18px; }
   .confidence-evidence-list { grid-template-columns: 1fr; }
 }
+
+/* V3.0.3 — claim-first report hierarchy */
+
+.hero.section {
+  padding-bottom: 34px !important;
+  border-bottom: 0;
+}
+
+.hero + .verdict-section {
+  margin-top: 0;
+}
+
+.assessment-details-section {
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.assessment-details {
+  border: 0;
+}
+
+.assessment-details > summary {
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  gap: 28px;
+  align-items: center;
+  padding: 24px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.assessment-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.assessment-details > summary::after {
+  content: "+";
+  color: var(--muted);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.assessment-details[open] > summary::after {
+  content: "−";
+}
+
+.assessment-details-hint {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.assessment-details-content {
+  padding: 0 0 42px;
+}
+
+.assessment-details-content .verification-notice {
+  margin: 0 0 22px;
+}
+
+.assessment-details-content .claim-context-stack {
+  margin-top: 0;
+}
+
+.sticky-claim-inner {
+  grid-template-columns: 190px minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.sticky-new-claim-action {
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.sticky-new-claim-action:hover {
+  opacity: .82;
+}
+
+@media (max-width: 760px) {
+  .assessment-details > summary {
+    grid-template-columns: 1fr auto;
+    gap: 8px 14px;
+  }
+
+  .assessment-details-hint {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .sticky-claim-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+  }
+
+  .sticky-claim-brand {
+    grid-column: 1;
+  }
+
+  .sticky-new-claim-action {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 30px;
+    padding: 7px 9px;
+    font-size: 8px;
+  }
+
+  .sticky-claim-toggle {
+    grid-column: 1 / -1;
+  }
+}
