@@ -74,14 +74,6 @@ export function ClaimReport({
           How Sure?
         </button>
         <div className="report-nav-actions">
-          <button
-            type="button"
-            className="report-new-claim-action"
-            onClick={onReset}
-          >
-            Analyse another claim
-          </button>
-
           {sharePath && (
             <button
               className="share-action"
@@ -101,6 +93,13 @@ export function ClaimReport({
             </button>
           )}
 
+          <button
+            type="button"
+            className="report-new-claim-action"
+            onClick={onReset}
+          >
+            Analyse another claim
+          </button>
         </div>
       </header>
 

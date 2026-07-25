@@ -1455,3 +1455,15 @@ scroll back to the top of a long evidence section to close it.
 # V3.0.7 — mobile evidence alignment
 
 The mobile evidence expansion now uses one consistent 14px inset for its header, reasoning, sources and footer. Source cards are constrained to the panel width, long text can wrap safely, and the final `Close evidence` button aligns with the expanded content rather than the viewport or outer grid.
+
+
+# V3.0.8 — report action order
+
+The normal report header now shows:
+
+```text
+Copy link | Analyse another claim
+```
+
+`Analyse another claim` remains the primary action and stays on the right. The
+sticky header is unchanged.

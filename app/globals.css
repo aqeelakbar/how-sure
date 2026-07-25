@@ -3605,3 +3605,12 @@ svg {
     text-align: center;
   }
 }
+
+
+/* V3.0.8 — report action order */
+@media (max-width: 520px) {
+  .report-new-claim-action,
+  .share-action {
+    order: initial;
+  }
+}
