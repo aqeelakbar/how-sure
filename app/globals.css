@@ -3496,3 +3496,112 @@ svg {
     width: 100%;
   }
 }
+
+
+/* V3.0.7 — align card-local evidence content and close action on mobile */
+@media (max-width: 760px) {
+  .score-card-group,
+  .mobile-card-evidence,
+  .mobile-card-evidence .evidence-panel {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .mobile-card-evidence .evidence-panel {
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--ink);
+    border-top: 0;
+    overflow: hidden;
+  }
+
+  .mobile-card-evidence .evidence-panel-header,
+  .mobile-card-evidence .evidence-panel-body,
+  .mobile-card-evidence .evidence-panel-footer {
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .mobile-card-evidence .evidence-panel-header {
+    padding-top: 18px;
+    padding-bottom: 18px;
+    align-items: start;
+  }
+
+  .mobile-card-evidence .evidence-panel-header h3 {
+    font-size: 24px;
+    line-height: 1.05;
+  }
+
+  .mobile-card-evidence .evidence-panel-score span {
+    font-size: 42px;
+  }
+
+  .mobile-card-evidence .evidence-panel-body {
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 22px;
+  }
+
+  .mobile-card-evidence .evidence-reasoning,
+  .mobile-card-evidence .evidence-sources,
+  .mobile-card-evidence .source-section-heading,
+  .mobile-card-evidence .source-list,
+  .mobile-card-evidence .source-card,
+  .mobile-card-evidence .no-source-note {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .mobile-card-evidence .evidence-sources {
+    margin-top: 26px;
+  }
+
+  .mobile-card-evidence .source-section-heading {
+    display: block;
+  }
+
+  .mobile-card-evidence .source-legend {
+    display: none;
+  }
+
+  .mobile-card-evidence .source-card {
+    padding: 14px;
+    overflow-wrap: anywhere;
+  }
+
+  .mobile-card-evidence .source-card-topline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mobile-card-evidence .source-role,
+  .mobile-card-evidence .source-quality {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .mobile-card-evidence .evidence-panel-footer {
+    margin: 0;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-card-evidence .evidence-close--footer {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+  }
+}

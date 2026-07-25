@@ -1450,3 +1450,8 @@ the full score grid.
 Every evidence panel now also ends with a clear `Close evidence` action. On
 mobile, this bottom action spans the available width so users do not need to
 scroll back to the top of a long evidence section to close it.
+
+
+# V3.0.7 — mobile evidence alignment
+
+The mobile evidence expansion now uses one consistent 14px inset for its header, reasoning, sources and footer. Source cards are constrained to the panel width, long text can wrap safely, and the final `Close evidence` button aligns with the expanded content rather than the viewport or outer grid.
