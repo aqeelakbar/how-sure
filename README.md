@@ -1467,3 +1467,19 @@ Copy link | Analyse another claim
 
 `Analyse another claim` remains the primary action and stays on the right. The
 sticky header is unchanged.
+
+
+# V3.0.9 — report CTA alignment
+
+The normal report-header actions now use the same typography and proportions as
+the sticky-header `Analyse another claim` CTA:
+
+- uppercase labels
+- matching letter-spacing
+- compact 34px height
+- square corners
+- matching border and padding
+- consistent font weight and line height
+
+`Copy link` remains the outlined secondary action, while
+`Analyse another claim` remains the filled primary action.

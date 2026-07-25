@@ -3614,3 +3614,55 @@ svg {
     order: initial;
   }
 }
+
+
+/* V3.0.9 — align normal report CTAs with sticky-header CTA */
+.report-nav-actions {
+  gap: 8px;
+}
+
+.report-nav-actions .share-action,
+.report-nav-actions .report-new-claim-action {
+  min-height: 34px;
+  height: 34px;
+  padding: 8px 12px;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+
+.report-nav-actions .share-action {
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+
+.report-nav-actions .share-action:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.report-nav-actions .report-new-claim-action {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.report-nav-actions .report-new-claim-action:hover {
+  opacity: .82;
+}
+
+@media (max-width: 780px) {
+  .report-nav-actions .share-action,
+  .report-nav-actions .report-new-claim-action {
+    min-height: 30px;
+    height: 30px;
+    padding: 7px 9px;
+    font-size: 8px;
+  }
+}
