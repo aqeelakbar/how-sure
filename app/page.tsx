@@ -72,7 +72,7 @@ export default function Home() {
   }
 
   if (status === "loading") {
-    return <AnalysisLoading />;
+    return <AnalysisLoading claim={claim.trim()} />;
   }
 
   if (status === "report" && analysis) {

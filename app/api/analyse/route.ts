@@ -513,6 +513,11 @@ Produce 2–5 rationale items per score and 2–8 useful annotations.
         ai.models.generateContent({
           model: MODEL,
           contents: prompt,
+          config: {
+            thinkingConfig: {
+              thinkingLevel: "low",
+            },
+          },
         }),
       { maxRetries: 2, baseDelayMs: 900 }
     );
@@ -625,6 +630,11 @@ Return JSON only, using exactly the same shape as the previous analysis.
           ai.models.generateContent({
             model: MODEL,
             contents: repairPrompt,
+            config: {
+              thinkingConfig: {
+                thinkingLevel: "medium",
+              },
+            },
           }),
         { maxRetries: 2, baseDelayMs: 900 }
       );
@@ -739,6 +749,11 @@ Return the full JSON analysis object only.
               ai.models.generateContent({
                 model: MODEL,
                 contents: fallbackPrompt,
+                config: {
+                  thinkingConfig: {
+                    thinkingLevel: "low",
+                  },
+                },
               }),
             { maxRetries: 2, baseDelayMs: 900 }
           );

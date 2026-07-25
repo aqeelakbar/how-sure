@@ -1582,3 +1582,63 @@ Lucide's `Share2` icon.
 This describes the user's goal rather than the technical action. The button still
 copies the permanent analysis URL to the clipboard and temporarily confirms with
 `Link copied`.
+
+
+# V3.2.0 — faster analysis + better perceived loading
+
+## Gemini latency
+
+The first analysis pass now uses Gemini 3.6 Flash with `thinkingLevel: "low"`
+instead of the model's default reasoning effort.
+
+The existing deterministic quality harness remains unchanged. If the first pass
+fails a substantive quality check, the one repair attempt uses
+`thinkingLevel: "medium"` for additional reasoning depth.
+
+The rare retrieval-fallback re-analysis also starts at `low`.
+
+This creates a deliberate architecture:
+
+```text
+fast first pass (low)
+        ↓
+quality harness
+        ↓
+PASS → show result
+FAIL → medium-reasoning repair
+```
+
+After this change, rerun the 10-claim quality harness before treating the latency
+improvement as validated.
+
+## Loading experience
+
+The old four large numbered steps have been removed.
+
+The new loading state:
+
+- keeps the submitted claim visible
+- uses one compact animated progress line
+- shows elapsed time
+- rotates plain-English explanations of the analysis
+- avoids pretending that a time-based animation is a real backend progress meter
+- uses much less vertical space on mobile
+
+After roughly 12 seconds, the copy acknowledges that the analysis is taking
+longer instead of leaving the user wondering whether it has stalled.
+
+
+# V3.2.1 — favicon build fix
+
+The V3.2.0 build could fail while prerendering `/icon` because `app/icon.tsx`
+attempted to use `lucide-react` inside Next.js' server-rendered metadata route.
+
+V3.2.1 removes that React icon route and replaces it with:
+
+```text
+app/icon.svg
+```
+
+The favicon keeps the Brain Circuit visual direction but is now a static SVG
+metadata asset. `lucide-react` remains installed because the application still
+uses Lucide icons in client UI such as Share analysis and the loading state.
