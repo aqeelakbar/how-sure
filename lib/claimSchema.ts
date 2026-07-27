@@ -37,6 +37,7 @@ export const claimAnalysisSchema = z.object({
   speaker: z.string(),
   type: z.string(),
   verdict: z.string(),
+  answerHeadline: z.string().optional().default(""),
   verdictSummary: z.string(),
   scoreThemes: z.array(scoreThemeSchema).length(4),
   rhetoricalCertainty: z.number().int().min(0).max(100),

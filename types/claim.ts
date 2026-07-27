@@ -42,6 +42,7 @@ export type ClaimAnalysis = {
   speaker: string;
   type: string;
   verdict: string;
+  answerHeadline?: string;
   verdictSummary: string;
   scoreThemes: ScoreTheme[];
   rhetoricalCertainty: number;

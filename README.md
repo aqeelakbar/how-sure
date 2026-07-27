@@ -77,7 +77,7 @@ Each detailed evidence view separates:
 
 ## Questions as input
 
-Question answers are answer-first: the primary result should respond to the user's question directly rather than classify the state of the evidence.
+Question answers are answer-first: the primary result should respond to the user's question directly rather than classify the state of the evidence. For questions, Gemini also returns a short `answerHeadline` derived from the specific evidence and distinction needed; the internal verdict remains available for quality-control logic.
 
 How Sure? accepts both assertions and questions.
 
@@ -94,6 +94,11 @@ For a question:
 - the same four dimensions and evidence audit trail remain available
 
 Internally, the existing approved verdict vocabulary is retained for quality-control compatibility. The interface translates those classifications into answer-oriented language for questions.
+
+
+### Questions about lying or deception
+
+When a question asks whether someone lied, How Sure? separates factual inaccuracy from deliberate deception. A false or misleading statement does not by itself establish that the speaker knew it was false and intended to deceive. Legal findings can be relevant, but they are not treated as the only possible evidence of intent.
 
 ## Evidence roles
 

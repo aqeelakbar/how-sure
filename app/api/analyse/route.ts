@@ -374,6 +374,15 @@ IMPORTANT ABOUT QUESTIONS:
 - Infer the proposition or propositions that would need to be investigated to answer the question, and test those against the evidence.
 - Keep the original question wording intact in statement and annotations.
 - The internal verdict MUST still use one of the approved verdict labels because the application quality checks depend on them.
+- For questions, answerHeadline MUST be a short, direct answer to the user's specific question. It should express the substantive conclusion or distinction, not classify the evidence.
+- Good answerHeadline patterns include "Some claims were false, but intent is harder to prove", "No, national output did not collapse", or "Yes, available data supports that". Generate wording appropriate to the actual question and evidence rather than copying these examples mechanically.
+- answerHeadline must not say "The evidence is mixed", "Not as simply as the question suggests", "It depends", or otherwise dodge the substantive answer when a clearer distinction is available.
+- When the question asks whether someone "lied", distinguish two separate issues: whether a statement was false or misleading, and whether there is evidence the speaker knew it was false and intended to deceive.
+- Do not treat a court ruling, criminal prosecution, or formal legal finding as the only valid way to assess intent. Legal findings may be relevant evidence, but intent can also be assessed from contemporaneous records, repeated corrections, internal knowledge, documented warnings, admissions, or other credible evidence about what the speaker knew.
+- Do not state that deliberate lying is "unproven" merely because a court did not establish it. Explain what evidence exists or is missing about knowledge and intent.
+- Avoid turning an ordinary question about truthfulness into a legal question unless the user's wording specifically asks about legality, misconduct, prosecution, or a legal standard.
+- Keep answerHeadline to roughly 3–10 words where possible, and no more than 14 words.
+- For assertions, answerHeadline should be an empty string.
 - verdictSummary and bottomLine MUST answer the user's question directly in plain language.
 - verdictSummary should begin with the substantive answer or distinction, not with meta-language such as "the evidence is mixed", "the sources are mixed", or "there is mixed evidence".
 - For yes/no questions, prefer formulations such as "Yes, but…", "No, not in the broad sense…", "Mostly yes…", or "There is not enough evidence to answer confidently", depending on what the evidence supports.
@@ -491,6 +500,7 @@ Use exactly this shape:
   "speaker": "string",
   "type": "string",
   "verdict": "string",
+  "answerHeadline": "string",
   "verdictSummary": "string",
   "scoreThemes": [
     {

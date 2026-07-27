@@ -48,7 +48,7 @@ export function ClaimReport({
   const inputKind = detectInputKind(claim);
   const isQuestion = inputKind === "question";
   const displayVerdict = isQuestion
-    ? questionFacingVerdict(data.verdict)
+    ? data.answerHeadline?.trim() || questionFacingVerdict(data.verdict)
     : data.verdict;
 
   const questionClarification =
