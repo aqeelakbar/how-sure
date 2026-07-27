@@ -27,10 +27,7 @@ export function AnimatedNumber({
   useEffect(() => {
     if (!inView) return;
 
-    if (reduceMotion) {
-      setDisplay(value);
-      return;
-    }
+    if (reduceMotion) return;
 
     const controls = animate(motionValue, value, {
       duration,
@@ -41,10 +38,12 @@ export function AnimatedNumber({
     return () => controls.stop();
   }, [duration, inView, motionValue, reduceMotion, value]);
 
+  const renderedValue = reduceMotion ? value : display;
+
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {display}
+      {renderedValue}
       {suffix}
     </span>
   );
