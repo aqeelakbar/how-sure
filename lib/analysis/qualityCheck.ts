@@ -290,6 +290,14 @@ export function checkAnalysisQuality({
     }
   }
 
+  if (analysis.annotations.length < 2) {
+    issues.push({
+      code: "insufficient_annotations",
+      message:
+        "The analysis should contain at least 2 useful wording annotations.",
+    });
+  }
+  
   for (const annotation of analysis.annotations) {
     if (!analysis.statement.includes(annotation.phrase)) {
       issues.push({

@@ -4,7 +4,13 @@ export const sourceSchema = z.object({
   title: z.string(),
   publisher: z.string(),
   type: z.string(),
-  role: z.enum(["Supports", "Contradicts", "Contextualises", "Defines", "Verifies"]),
+  role: z.enum([
+    "Supports",
+    "Contradicts",
+    "Contextualises",
+    "Defines",
+    "Verifies",
+  ]),
   quality: z.enum(["High", "Medium", "Low"]),
   relevance: z.string(),
   url: z.string(),
@@ -28,12 +34,15 @@ export const annotationSchema = z.object({
 
 export const claimAnalysisSchema = z.object({
   statement: z.string(),
-  detectedClaims: z.array(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-    })
-  ).min(1).max(5),
+  detectedClaims: z
+    .array(
+      z.object({
+        id: z.string(),
+        text: z.string(),
+      })
+    )
+    .min(1)
+    .max(5),
   speaker: z.string(),
   type: z.string(),
   verdict: z.string(),
@@ -43,7 +52,9 @@ export const claimAnalysisSchema = z.object({
   rhetoricalCertainty: z.number().int().min(0).max(100),
   evidenceCertainty: z.number().int().min(0).max(100),
   certaintyGapSummary: z.string(),
-  annotations: z.array(annotationSchema).min(2).max(8),
+
+  annotations: z.array(annotationSchema).max(8).default([]),
+
   defensibleRewrite: z.string(),
   plainEnglish: z.string(),
   bottomLine: z.string(),
