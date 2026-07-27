@@ -197,7 +197,22 @@ export function ClaimReport({
         <section className="section score-section why-section">
           <Reveal className="section-heading why-heading">
             <p className="section-label">Why?</p>
-            <h2>Why we reached this conclusion.</h2>
+            <div className="why-heading-main">
+              <h2>Why we reached this conclusion.</h2>
+              <button
+                type="button"
+                className="why-help-link"
+                onClick={() =>
+                  window.dispatchEvent(
+                    new CustomEvent("open-how-sure-about", {
+                      detail: { section: "result" },
+                    })
+                  )
+                }
+              >
+                How should I read these dimensions?
+              </button>
+            </div>
           </Reveal>
 
           <div className="why-grid">

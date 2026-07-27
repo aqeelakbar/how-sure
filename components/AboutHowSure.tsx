@@ -15,6 +15,7 @@ const sections = [
 
 export function AboutHowSure() {
   const [open, setOpen] = useState(false);
+  const [pendingSection, setPendingSection] = useState<string | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -34,6 +35,31 @@ export function AboutHowSure() {
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
+
+
+  useEffect(() => {
+    const openAbout = (event: Event) => {
+      const customEvent = event as CustomEvent<{ section?: string }>;
+      setPendingSection(customEvent.detail?.section ?? null);
+      setOpen(true);
+    };
+
+    window.addEventListener("open-how-sure-about", openAbout);
+    return () => window.removeEventListener("open-how-sure-about", openAbout);
+  }, []);
+
+  useEffect(() => {
+    if (!open || !pendingSection) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      document
+        .getElementById(`about-${pendingSection}`)
+        ?.scrollIntoView({ block: "start" });
+      setPendingSection(null);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [open, pendingSection]);
 
   return (
     <>

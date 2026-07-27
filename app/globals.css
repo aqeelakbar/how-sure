@@ -5057,3 +5057,100 @@ svg {
 .loading-claim {
   border-bottom: 0 !important;
 }
+
+
+/* Step 47: contextual guidance and clearer home-link affordance */
+.brand-button {
+  position: relative;
+  padding: 8px 0;
+  transition: opacity 160ms ease;
+}
+
+.brand-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 160ms ease;
+}
+
+.brand-button:hover::after,
+.brand-button:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.brand-button:focus-visible,
+.why-help-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.why-help-link {
+  margin-top: 16px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.why-help-link:hover,
+.why-help-link:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .why-help-link {
+    margin-top: 14px;
+  }
+}
+
+
+/* Step 48: place contextual Why help with the section heading */
+.why-heading-main {
+  min-width: 0;
+}
+
+.why-heading-main h2 {
+  margin-bottom: 0;
+}
+
+.why-help-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.4;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.why-help-link:hover,
+.why-help-link:focus-visible {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+@media (max-width: 640px) {
+  .why-help-link {
+    margin-top: 10px;
+  }
+}
