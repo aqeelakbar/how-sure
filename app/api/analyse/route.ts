@@ -13,6 +13,7 @@ import {
   type RetrievalClaim,
 } from "@/lib/analysis/subclaims";
 import { parseAttribution } from "@/lib/analysis/attribution";
+import { detectInputKind } from "@/lib/analysis/inputKind";
 import { checkAnalysisQuality } from "@/lib/analysis/qualityCheck";
 import { applyLocalQualityFixes } from "@/lib/analysis/localQualityFixes";
 import { withProviderRetry } from "@/lib/ai/providerRetry";
@@ -333,6 +334,7 @@ export async function POST(request: Request) {
     }
 
     failureStage = "claim_parsing";
+    const inputKind = detectInputKind(claim.trim());
     const attribution = parseAttribution(claim.trim());
 
     // Retrieval should test the proposition itself, not a reporting wrapper
@@ -353,8 +355,11 @@ export async function POST(request: Request) {
     const prompt = `
 You are the analysis engine for "How Sure?", an evidence-backed claim analysis prototype.
 
-ORIGINAL STATEMENT:
+ORIGINAL INPUT:
 "${claim.trim()}"
+
+INPUT TYPE:
+- ${inputKind === "question" ? "Question" : "Assertion"}
 
 ATTRIBUTION PARSE:
 - Attribution wrapper detected: ${attribution.detected ? "yes" : "no"}
@@ -362,6 +367,19 @@ ATTRIBUTION PARSE:
 - Proposition being tested: "${attribution.proposition}"
 
 ${formatEvidence(detectedClaims, retrievedSources)}
+
+
+IMPORTANT ABOUT QUESTIONS:
+- When INPUT TYPE is Question, the user is asking How Sure? to investigate something. Do NOT judge the question itself as though the user asserted it as fact.
+- Infer the proposition or propositions that would need to be true for a "yes" answer, and analyse those against the evidence.
+- Keep the original question wording intact in statement and annotations. Do not silently rewrite the user's input into an assertion in the UI-facing fields.
+- The internal verdict MUST still use one of the approved verdict labels because the application quality checks depend on them.
+- For a question, verdictSummary and bottomLine MUST answer what the evidence suggests about the question, not say that "the question is false", "the question is misleading", or "the question is true".
+- If the question uses a vague, loaded or undefined term, explain that the evidence can establish some underlying facts but that the term prevents a precise yes/no conclusion.
+- For a question, rhetoricalCertainty means how strongly the wording presupposes, frames or steers toward a conclusion. A neutral open question should have low rhetoricalCertainty.
+- For a question, certaintyGapSummary should explain the difference between what the wording implies and what the evidence establishes, in plain language.
+- For questions, prioritise annotations that materially affect the answer, such as vague or undefined terms, loaded framing, evaluative wording, comparison standards, categorical wording or broad scope. Do not spend annotation slots on neutral qualifiers unless they genuinely change interpretation.
+- The four score themes remain the same: factual testability, evidence quality, enough context and fair wording.
 
 IMPORTANT ABOUT ATTRIBUTION:
 - If an attribution wrapper was detected, treat the attributed person/source separately from the proposition.
@@ -409,9 +427,10 @@ SOURCE QUALITY:
 - Low: weakly sourced commentary, advocacy without supporting evidence, low-transparency publication, or limited evidential value.
 
 JUDGEMENT TARGET:
-- The trust judgement is about the proposition, not the attribution wrapper.
-- "Should I trust this claim?" means: how justified is the proposition by the available evidence?
-- "Bottom line" must answer that same question in one short, plain-English sentence.
+- The analysis target is the proposition, not the attribution wrapper.
+- For an assertion, "Should I trust this claim?" means: how justified is the proposition by the available evidence?
+- For a question, answer what the evidence suggests about the investigated proposition. Do not treat the interrogative sentence itself as a factual assertion.
+- "Bottom line" must answer the relevant assertion or question in one short, plain-English sentence.
 - If the core proposition is mainly subjective, evaluative, moral or value-based and cannot be resolved by observable evidence as stated, use the verdict "Mostly opinion". Do NOT use "Not enough evidence" for a proposition that is inherently non-testable as phrased; that label is only for testable claims where the available evidence is insufficient.
 - plainEnglish has a DIFFERENT job from verdictSummary and bottomLine. It is rendered as “What this means” and must give the reader a NEW interpretive distinction to carry forward when interpreting, sharing or repeating the statement.
 - In plainEnglish, NEVER repeat or paraphrase the verdict, verdictSummary or bottomLine. Do NOT mention the verdict category; whether the statement is opinion, factual, verifiable, supported, true, false, proved/disproved; evidence sufficiency; reporting, news coverage, sources, attribution; or whether the speaker said it.

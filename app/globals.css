@@ -5154,3 +5154,59 @@ svg {
     margin-top: 10px;
   }
 }
+
+
+/* Step 50: simpler question-vs-evidence treatment */
+.question-evidence-analysis {
+  padding-top: 34px;
+}
+
+.question-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 42px;
+  padding: 28px 0 34px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.question-evidence-grid h4 {
+  max-width: 520px;
+  margin: 8px 0 0;
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -.02em;
+  font-weight: 500;
+}
+
+.question-evidence-judgement {
+  padding: 36px 0 6px;
+}
+
+.question-evidence-judgement strong {
+  display: block;
+  max-width: 720px;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  font-weight: 500;
+}
+
+.question-evidence-judgement > p:last-child {
+  max-width: 680px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .question-evidence-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .question-evidence-judgement {
+    padding-top: 30px;
+  }
+}

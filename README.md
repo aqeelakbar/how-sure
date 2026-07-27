@@ -74,6 +74,25 @@ Each detailed evidence view separates:
 - **Why it matters**
 - the evidence or language analysis used for that dimension
 
+
+## Questions as input
+
+How Sure? accepts both assertions and questions.
+
+Questions are not silently converted into claims and then labelled true, false or misleading. The application detects interrogative input and treats it as something the user wants investigated.
+
+For a question:
+
+- the original wording remains visible as **Original question**
+- the primary result asks **What does the evidence suggest?**
+- the system identifies the proposition that would need to be supported for a yes/no answer
+- vague or loaded wording can prevent a precise binary conclusion
+- **Question vs evidence** compares how the question is worded with what the evidence supports, using a plain-English judgement rather than a numerical confidence balance
+- **Statement Anatomy** is only shown for questions when the wording materially affects interpretation
+- the same four dimensions and evidence audit trail remain available
+
+Internally, the existing approved verdict vocabulary is retained for quality-control compatibility. The interface translates those classifications into answer-oriented language for questions.
+
 ## Evidence roles
 
 Sources are assigned roles so the UI can explain what they actually do:

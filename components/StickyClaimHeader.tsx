@@ -6,6 +6,7 @@ import { useState } from "react";
 type Props = {
   claim: string;
   speaker: string;
+  inputKind?: "question" | "assertion";
   visible: boolean;
   onReset: () => void;
 };
@@ -27,6 +28,7 @@ function sourceLabel(speaker: string) {
 export function StickyClaimHeader({
   claim,
   speaker,
+  inputKind = "assertion",
   visible,
   onReset,
 }: Props) {
@@ -50,7 +52,7 @@ export function StickyClaimHeader({
             <div className="sticky-claim-brand">
               <span className="sticky-claim-product">How Sure?</span>
               <span className="sticky-claim-source">
-                {sourceLabel(speaker)} · Original claim
+                {sourceLabel(speaker)} · {inputKind === "question" ? "Original question" : "Original claim"}
               </span>
             </div>
 
@@ -62,7 +64,11 @@ export function StickyClaimHeader({
             >
               <span className="sticky-claim-text">“{claim}”</span>
               <span className="sticky-claim-action">
-                {expanded ? "Collapse" : "View full claim"}
+                {expanded
+                  ? "Collapse"
+                  : inputKind === "question"
+                    ? "View full question"
+                    : "View full claim"}
               </span>
             </button>
 

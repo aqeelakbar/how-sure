@@ -9,6 +9,7 @@ import { StatementAnatomy } from "@/components/StatementAnatomy";
 import { Reveal } from "@/components/Reveal";
 import { StickyClaimHeader } from "@/components/StickyClaimHeader";
 import { Methodology } from "@/components/Methodology";
+import { detectInputKind, questionFacingVerdict } from "@/lib/analysis/inputKind";
 
 type Props = {
   claim: string;
@@ -43,6 +44,19 @@ export function ClaimReport({
     )
   ).size;
 
+  const inputKind = detectInputKind(claim);
+  const isQuestion = inputKind === "question";
+  const displayVerdict = isQuestion
+    ? questionFacingVerdict(data.verdict)
+    : data.verdict;
+
+  const questionHasMeaningfulWording = data.annotations.some((annotation) => {
+    const label = annotation.label.toLowerCase();
+    return !["qualifier"].includes(label);
+  });
+  const showStatementAnatomy =
+    !isQuestion || questionHasMeaningfulWording;
+
   const submittedSpeaker = data.speaker.trim();
   const hasSubmittedSpeaker = ![
     "source not provided",
@@ -73,6 +87,7 @@ export function ClaimReport({
       <StickyClaimHeader
         claim={claim}
         speaker={data.speaker}
+        inputKind={inputKind}
         visible={showStickyClaim}
         onReset={onReset}
       />
@@ -115,7 +130,7 @@ export function ClaimReport({
       <article>
         <section ref={heroRef} className="hero section">
           <Reveal>
-            <p className="section-label">Original claim</p>
+            <p className="section-label">{isQuestion ? "Original question" : "Original claim"}</p>
             <blockquote>“{claim}”</blockquote>
             <div className="claim-meta">
               <span>
@@ -131,8 +146,10 @@ export function ClaimReport({
 
         <section className="verdict-section section">
           <Reveal>
-            <p className="section-label">Should I trust this claim?</p>
-            <h1>{data.verdict}</h1>
+            <p className="section-label">
+              {isQuestion ? "What does the evidence suggest?" : "Should I trust this claim?"}
+            </p>
+            <h1>{displayVerdict}</h1>
             <p className="verdict-summary">{data.verdictSummary}</p>
           </Reveal>
         </section>
@@ -151,8 +168,9 @@ export function ClaimReport({
                 <p className="section-label">What was assessed</p>
                 <div className="assessment-overview-value">
                   <strong>
-                    {data.detectedClaims.length} testable claim
-                    {data.detectedClaims.length === 1 ? "" : "s"}
+                    {isQuestion
+                      ? `${data.detectedClaims.length} proposition${data.detectedClaims.length === 1 ? "" : "s"} investigated`
+                      : `${data.detectedClaims.length} testable claim${data.detectedClaims.length === 1 ? "" : "s"}`}
                   </strong>
                   {data.detectedClaims[0] && (
                     <p>“{data.detectedClaims[0].text}”</p>
@@ -276,16 +294,19 @@ export function ClaimReport({
         </section>
 
         <ClaimVsEvidence
+          isQuestion={isQuestion}
           claimConfidence={data.rhetoricalCertainty}
           evidenceSupport={data.evidenceCertainty}
           summary={data.certaintyGapSummary}
           sources={data.scoreThemes.flatMap((theme) => theme.sources)}
         />
 
-        <StatementAnatomy
-          statement={claim}
-          annotations={data.annotations}
-        />
+        {showStatementAnatomy && (
+          <StatementAnatomy
+            statement={claim}
+            annotations={data.annotations}
+          />
+        )}
 
         <section className="section meaning-section">
           <Reveal>
