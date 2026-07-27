@@ -48,10 +48,10 @@ export function Methodology() {
 
           <div className="methodology-flow">
             <span>02 · Interpret</span>
-            <strong>Gemini compares the claim with the evidence.</strong>
+            <strong>Gemini interprets the proposition, evidence, context and wording.</strong>
             <p>
-              It assigns source roles, relevance, quality, missing context and
-              rhetorical features.
+              It distinguishes what can be tested, what the evidence directly establishes,
+              what context changes interpretation and what the wording is doing.
             </p>
           </div>
 
@@ -71,8 +71,9 @@ export function Methodology() {
             <span>03 · Calculate</span>
             <strong>The application derives confidence balance.</strong>
             <p>
-              Evidence support − claim confidence. Negative means overclaiming;
-              near zero means aligned; positive means cautious.
+              Evidence support − claim confidence. Negative means the statement sounds more
+              certain than the available evidence can justify or establish; near zero means aligned;
+              positive means the wording is more cautious than the evidence requires.
             </p>
           </div>
 
@@ -80,41 +81,50 @@ export function Methodology() {
             <article>
               <h3>Based on facts</h3>
               <p>
-                How well factual parts of the statement are supported by
-                retrieved evidence.
+                Whether the proposition can be objectively tested as written, and whether evidence
+                could establish it as true or false.
               </p>
             </article>
 
             <article>
               <h3>Evidence quality</h3>
               <p>
-                Quality, relevance, directness, independence and agreement of
-                the evidence base.
+                How direct, relevant, reliable and independent the available evidence is for
+                the proposition being assessed.
               </p>
             </article>
 
             <article>
               <h3>Enough context</h3>
               <p>
-                Whether important qualifiers, definitions, uncertainty or
-                alternative explanations are missing.
+                Whether important context, qualifiers or examples are missing in ways that could
+                materially change how the statement is understood.
               </p>
             </article>
 
             <article>
               <h3>Fair wording</h3>
               <p>
-                How strongly wording pushes an interpretation through
-                absolutes, emotive framing or false dilemmas.
+                How the wording uses vague, broad, categorical, evaluative or loaded language,
+                including undefined terms and comparison standards.
               </p>
             </article>
+          </div>
+
+          <div className="methodology-callout">
+            <span>Claim vs evidence</span>
+            <p>
+              How Sure? compares how certain the statement sounds with how strongly the available
+              evidence supports the proposition. The balance is then explained through what creates
+              certainty, what the evidence establishes and what it cannot establish.
+            </p>
           </div>
 
           <div className="methodology-rules">
             <div>
               <span>Source roles</span>
               <p>
-                Supports · Contradicts · Contextualises · Defines · Verifies
+                Supports proposition · Contradicts proposition · Adds context · Defines term · Verifies attribution
               </p>
             </div>
 
@@ -123,15 +133,17 @@ export function Methodology() {
               <p>
                 High favours primary, official and strong academic evidence.
                 Medium covers reputable secondary evidence. Low reflects weaker
-                or low-transparency material.
+                or low-transparency material. Source quality does not by itself mean the source
+                proves the proposition.
               </p>
             </div>
 
             <div>
               <span>Limitation</span>
               <p>
-                Search can be incomplete and model interpretation can still be
-                wrong. The evidence panels remain the audit trail.
+                Search can be incomplete and model interpretation can still be wrong. Some
+                propositions are value judgements rather than testable facts. The evidence and
+                language panels remain the audit trail.
               </p>
             </div>
           </div>

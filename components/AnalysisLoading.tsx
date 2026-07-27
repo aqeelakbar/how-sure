@@ -63,7 +63,7 @@ export function AnalysisLoading({ claim }: Props) {
 
         <div className="loading-content loading-content--compact">
           <p className="eyebrow">Analysing claim</p>
-          <h1>Checking before judging.</h1>
+          <h1>Checking before concluding.</h1>
 
           <div className="loading-claim" aria-label="Claim being analysed">
             <span>YOUR CLAIM</span>

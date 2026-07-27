@@ -365,6 +365,7 @@ ${formatEvidence(detectedClaims, retrievedSources)}
 
 IMPORTANT ABOUT ATTRIBUTION:
 - If an attribution wrapper was detected, treat the attributed person/source separately from the proposition.
+- Reporting wrappers such as “X says/claims/asserts that …” are provenance. The words after the reporting verb are the default judgement target.
 - The evidence score for the proposition must not change merely because a speaker name was included in a reporting wrapper.
 - Attribution belongs to provenance, not to the trust judgement.
 - DO NOT use confirmation that the speaker said something as evidence that the underlying proposition is true.
@@ -411,12 +412,40 @@ JUDGEMENT TARGET:
 - The trust judgement is about the proposition, not the attribution wrapper.
 - "Should I trust this claim?" means: how justified is the proposition by the available evidence?
 - "Bottom line" must answer that same question in one short, plain-English sentence.
+- If the core proposition is mainly subjective, evaluative, moral or value-based and cannot be resolved by observable evidence as stated, use the verdict "Mostly opinion". Do NOT use "Not enough evidence" for a proposition that is inherently non-testable as phrased; that label is only for testable claims where the available evidence is insufficient.
+- plainEnglish has a DIFFERENT job from verdictSummary and bottomLine. It is rendered as “What this means” and must give the reader a NEW interpretive distinction to carry forward when interpreting, sharing or repeating the statement.
+- In plainEnglish, NEVER repeat or paraphrase the verdict, verdictSummary or bottomLine. Do NOT mention the verdict category; whether the statement is opinion, factual, verifiable, supported, true, false, proved/disproved; evidence sufficiency; reporting, news coverage, sources, attribution; or whether the speaker said it.
+- Do not use phrases such as “treat this as”, “you can trust that”, “news reports confirm”, “political opinion”, “factual claim”, or “cannot be proven”.
+- Instead, explain one concrete interpretive distinction: the standard being applied, an undefined term, an assumption, a comparison, or a limitation. Focus on what the proposition presupposes or leaves undefined, not on whether it is correct.
+- Write plainEnglish as 1–2 short sentences. Prefer concrete wording tied to the claim itself. Example pattern: “The statement uses X as its standard for Y. It does not provide a neutral or agreed measure for Z.” Do not copy this example verbatim.
 - If the proposition is mainly subjective/evaluative (for example "too easy", "unfair", "a disaster"), explain that in everyday language.
 - Do not substitute "the speaker really said this" for "the claim is supported."
 - Write for a general reader with no specialist knowledge.
 - Prefer short words and short sentences.
+- Avoid em dashes (—) in user-facing generated prose. Prefer a comma or full stop instead.
 - Avoid academic or technical terms such as "empirical", "evaluative proposition", "substantiated", "factual reality", "epistemic", or "rhetorical certainty" in user-facing prose unless absolutely necessary.
 - If a specialist concept is needed, explain it immediately in ordinary language.
+
+WHY CONTENT RULES:
+- The four scoreThemes summaries are the default on-page explanations. Each summary must be ONE short sentence, ideally 10–18 words. Lead with the finding; do not describe the scoring process.
+- Each scoreTheme rationale must contain exactly TWO concise findings. Each item should be one sentence, ideally 10–20 words.
+- Each dimension has a STRICT editorial remit. Do not use one dimension to answer another dimension's question.
+- Based on facts = VERIFIABILITY OF THE UNDERLYING PROPOSITION ONLY. Never mention the speaker, reporting, whether the quote is authentic, or that the statement was made. State whether the proposition can be checked against observable facts or measurable evidence and, if testable, how well it is supported.
+- For Based on facts rationale ONLY: rationale[0] = WHAT WE FOUND (whether the underlying proposition is objectively testable as stated); rationale[1] = WHY IT MATTERS (state exactly what measurable definition, criterion, comparison rule or test is missing or present, and explain how that limits what evidence can establish). The second item MUST stay on testability. Do not discuss political stance, policy preference, rights being established, the speaker, motives, attribution, or whether a concept is legally recognised. If sources only define terms mentioned in the argument, explain that definitions do not create an objective test for the central proposition. Do not repeat the same point in both.
+- Evidence quality = WHAT THE EVIDENCE ESTABLISHES ABOUT THE UNDERLYING PROPOSITION. Lead with the evidential limit or strength for the proposition itself. Do not treat reputable reporting of a quotation as support for the proposition. If available sources mainly establish attribution or context, say that they do not independently establish the proposition. Mention attribution only when needed to explain this limitation, never as the main finding.
+- For Evidence quality rationale ONLY: rationale[0] = WHAT WE FOUND (describe the role the displayed evidence actually plays for the underlying proposition. If the visible sources mainly define terms, add context, or verify attribution, say that plainly instead of generalising about other evidence); rationale[1] = WHY IT MATTERS (explain what those sources can and cannot establish about the proposition). Keep both items tightly traceable to the source cards shown, and focus on evidential quality, directness, relevance and independence. Do not repeat the Based on facts testability judgement.
+- Enough context = INTERPRETIVE CONTEXT OF THE UNDERLYING PROPOSITION. Ignore the reporting wrapper. Identify the specific qualifier, definition, timeframe, comparison, surrounding passage or alternative explanation that materially changes interpretation, and state why it matters.
+- For Enough context rationale ONLY: rationale[0] = WHAT WE FOUND (state the actual contextual detail present or missing in the submitted statement itself, not the publication, outlet or place where the context came from; avoid generic phrases such as “broader debate” or “more context is needed”); rationale[1] = WHY IT MATTERS (explain exactly how that missing or present detail changes, narrows or qualifies the meaning of the underlying proposition). Keep both items concrete and claim-specific. Do not repeat factual testability or evidence-quality findings.
+- For Enough context source cards ONLY: each source relevance sentence must name the specific contextual detail that source supplies for this claim (for example an omitted example, qualifier, definition, timeframe or surrounding passage). Do not describe only the general political setting or publication context unless that setting itself materially changes interpretation. The relevance text must visibly support the Enough context rationale shown on the left.
+- For Enough context, do not name a publication, outlet, article or source in the rationale unless that exact source is displayed in the Enough context source cards. Prefer describing the contextual detail itself rather than where it came from.
+- Fair wording = LANGUAGE OF THE UNDERLYING PROPOSITION ONLY. Ignore neutral reporting phrases such as “X says/claims/asserts that”. Analyse whether the proposition itself is precise, proportionate, loaded, absolute, vague or undefined. Never infer the speaker's motive or intention.
+- For Fair wording rationale ONLY: rationale[0] = WHAT WE FOUND (identify the specific word, phrase or construction in the underlying proposition that affects precision, neutrality, scope or strength; quote only short wording from the proposition when useful); rationale[1] = WHY IT MATTERS (explain how that wording changes interpretation by naming the undefined standard, broadened scope, categorical framing or other concrete language effect). Keep both items about language only. Do not call a policy stance an "absolute principle" unless the proposition literally uses absolute language. Do not discuss truth, evidence quality, missing context, attribution, motive or political intent.
+- Fair wording relies primarily on textual analysis of the proposition itself. Do NOT attach external sources merely because they define concepts mentioned in the statement or provide general background. Attach a source only when it is genuinely necessary to establish the exact wording or clarify a disputed term whose meaning is central to the wording assessment. Language analysis remains the primary evidence mode for Fair wording even when a reference source is attached.
+- ANNOTATIONS power both Statement Anatomy and the Fair wording “Language analysis” panel. Each annotation explanation must describe WHAT THE SELECTED WORDING IS DOING linguistically or rhetorically: for example, defining a comparison standard, broadening scope, using categorical language, leaving a term undefined, adding a qualifier, or intensifying certainty. Do NOT explain whether the selected phrase is factual, true, false, supported, verifiable or opinion-based. For wording-focused annotations, use ONLY these label types when applicable: "Value judgement", "Undefined term", "Vague term", "Categorical wording", "Absolute wording", "Broad scope", "Broad generalisation", "Loaded framing", "Evaluative wording", "Comparison standard", or "Qualifier". Prioritise concrete wording signals in the underlying proposition. Do NOT create wording annotations for neutral semantic categories such as "Legal concepts", "Policy topic", "Political context", or general subject matter. Do not spend annotations on neutral attribution wrappers unless attribution itself is genuinely important to understanding the statement.
+- Keep attribution evidence separate from evidence for the proposition. Reporting that confirms a person said something may verify attribution, but it does NOT support the truth of the underlying proposition. Say this distinction explicitly when relevant.
+- Do not repeat the same finding across multiple dimensions. If a point belongs to one remit, keep it there.
+- Prefer concrete wording over abstract commentary. Avoid phrases such as "political philosophy", "conventional principles", "contentious proposal" or "societal norms" when simpler wording is available.
+- A source role of "Verifies" means it verifies a factual detail such as attribution, wording, date or occurrence. Never imply that "Verifies" means the underlying proposition has been proven true.
 
 SCORING — ALL FOUR DISPLAY SCORES USE HIGHER = BETTER:
 - Based on facts: how well the proposition itself is supported by the retrieved evidence. Higher means the claim is better supported.
@@ -503,7 +532,7 @@ Use exactly this shape:
   "bottomLine": "string"
 }
 
-Produce 2–5 rationale items per score and 2–8 useful annotations.
+Produce exactly 2 rationale items per score and 2–8 useful annotations.
 `;
 
     failureStage = "initial_generation";
@@ -600,6 +629,7 @@ REPAIR RULES:
 - Return the full JSON object again, not a patch.
 - Correct every listed failure.
 - Judge the proposition, not whether the quote was correctly attributed.
+- Treat “X says/claims/asserts that …” as attribution/provenance; assess the proposition after the reporting verb unless the proposition itself is explicitly about whether X said or did something.
 - Use plain English for a general reader.
 - Verdict should normally be 2–5 words.
 - Bottom line must be one short sentence, ideally 12–22 words.
@@ -615,8 +645,30 @@ REPAIR RULES:
   "Well supported", "Mostly supported", "Mixed evidence", "Not enough evidence",
   "Mostly opinion", "Misleading as stated", "Not supported by reliable evidence", or "False".
 - Use "False" only when cited evidence directly contradicts the claim. If reliable data simply does not establish the claim, use "Not supported by reliable evidence".
+- If the proposition is mainly subjective, evaluative, moral or value-based and is not objectively testable as stated, the verdict MUST be "Mostly opinion". Do not use "Not enough evidence" for inherently non-testable value judgements.
+- plainEnglish / “What this means” must add a NEW interpretive distinction, not repeat or paraphrase the verdict, verdictSummary or bottomLine.
+- In plainEnglish, NEVER mention the verdict category; whether the statement is opinion, factual, verifiable, supported, true, false, proved/disproved; evidence sufficiency; reporting, news coverage, sources, attribution; or whether the speaker said it. Avoid phrases such as “treat this as”, “you can trust that”, “news reports confirm”, “political opinion”, “factual claim”, and “cannot be proven”.
+- Explain instead ONE concrete interpretive distinction: the standard being applied, an undefined term, an assumption, a comparison or a limitation. State what the proposition presupposes or leaves undefined, not whether it is correct. Keep it concrete and claim-specific.
 - Only cite sources supplied above.
 - Do not invent URLs, titles, publishers, dates, facts or quotations.
+- Keep every scoreTheme summary to one short sentence (ideally 10–18 words).
+- Give exactly two concise rationale items per scoreTheme, ideally 10–20 words each.
+- Keep the four dimensions strictly separate: Based on facts = verifiability; Evidence quality = what the evidence establishes; Enough context = context that changes interpretation; Fair wording = the language itself.
+- Do not repeat the same finding across dimensions.
+- Separate attribution verification from evidence supporting the proposition. A source confirming who said something does not prove the proposition true.
+- For Based on facts, discuss ONLY the underlying proposition's verifiability and factual support. Never mention the speaker, reporting or whether the quote is authentic.
+- For Based on facts rationale ONLY: item 1 must state WHAT WE FOUND about whether the underlying proposition is objectively testable as stated; item 2 must state WHY THAT MATTERS by naming the missing or present measurable definition, criterion, comparison rule or test and explaining how it limits what evidence can establish. Item 2 MUST stay on testability: do not discuss political stance, policy preference, established rights, the speaker, motives, attribution, or whether a concept is legally recognised. If the sources only define terms, say that definitions do not provide an objective test for the central proposition. Keep the two items distinct.
+- For Evidence quality, lead with what the evidence establishes about the underlying proposition. If sources mainly verify attribution/context, explicitly state that this does not establish the proposition.
+- For Evidence quality rationale ONLY: item 1 must describe the role the displayed sources actually play for the proposition; if they mainly define terms, add context or verify attribution, say that plainly. Item 2 must explain what those sources can and cannot establish about the proposition. Both items must map directly to the source cards shown and focus on reliability, directness, relevance and independence. Do not repeat the Based on facts testability judgement.
+- For Fair wording, analyse ONLY the wording of the underlying proposition, ignoring the reporting wrapper; do not infer intent or motive.
+- For Fair wording rationale ONLY: item 1 must identify the specific word, phrase or construction affecting precision, neutrality, scope or strength; item 2 must explain how that wording changes interpretation by naming the undefined standard, broadened scope, categorical framing or other concrete language effect. Do not call a policy stance an "absolute principle" unless the proposition literally uses absolute language. Keep both items about language only, with no truth, evidence, context, attribution or motive analysis.
+- Fair wording relies primarily on textual analysis rather than external sources. Do NOT cite sources merely because they define concepts mentioned in the statement or provide general background. Cite a source only when it is genuinely necessary to establish the exact wording or clarify a disputed term whose meaning is central to the wording assessment.
+- For wording-focused annotations used in Statement Anatomy and Language analysis, each explanation must describe what the selected wording is doing linguistically or rhetorically. Do not explain whether the phrase is factual, true, false, supported, verifiable or opinion-based. Use only these label types when applicable: "Value judgement", "Undefined term", "Vague term", "Categorical wording", "Absolute wording", "Broad scope", "Broad generalisation", "Loaded framing", "Evaluative wording", "Comparison standard", or "Qualifier". Do not use neutral semantic labels such as "Legal concepts", "Policy topic", "Political context", or general subject matter.
+- For Enough context, analyse ONLY context that changes interpretation of the underlying proposition and explain why it matters.
+- For Enough context rationale ONLY: item 1 must state the actual contextual detail present or missing in the submitted statement itself, not the publication, outlet or place where the context came from; item 2 must explain exactly how that detail changes, narrows or qualifies interpretation. Avoid generic references to a “broader debate” or saying only that “more context is needed”. Keep both items concrete and claim-specific, and do not repeat factual-testability or evidence-quality findings.
+- For Enough context source cards ONLY: each relevance sentence must identify the specific contextual detail that source contributes to interpreting this claim, and it must directly support the rationale shown. Do not describe only the general political or publication setting unless that setting materially changes the claim’s meaning.
+- For Enough context, do not name a publication, outlet, article or source in the rationale unless that exact source is displayed in that theme's source cards. Prefer the contextual detail itself.
+- Avoid em dashes (—) in user-facing generated prose. Prefer commas or full stops.
 - annotation.phrase must be an exact substring of the original statement.
 - Preserve detectedClaims exactly as supplied.
 - defensibleRewrite must be an empty string.

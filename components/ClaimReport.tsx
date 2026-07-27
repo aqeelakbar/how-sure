@@ -3,17 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Share2 } from "lucide-react";
 import type { ClaimAnalysis } from "@/types/claim";
-import { ScoreCard } from "@/components/ScoreCard";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { ClaimVsEvidence } from "@/components/ClaimVsEvidence";
 import { StatementAnatomy } from "@/components/StatementAnatomy";
 import { Reveal } from "@/components/Reveal";
-import { VerificationNotice } from "@/components/VerificationNotice";
 import { StickyClaimHeader } from "@/components/StickyClaimHeader";
-import { ProvenancePanel } from "@/components/ProvenancePanel";
 import { Methodology } from "@/components/Methodology";
-import { ClaimsDetected } from "@/components/ClaimsDetected";
-import { AssessmentSources } from "@/components/AssessmentSources";
 
 type Props = {
   claim: string;
@@ -41,6 +36,18 @@ export function ClaimReport({
 
   const selectedTheme =
     data.scoreThemes.find((theme) => theme.id === selectedScore) ?? null;
+
+  const citedSourceCount = new Set(
+    data.scoreThemes.flatMap((theme) =>
+      theme.sources.map((source) => `${source.url}::${source.role}`)
+    )
+  ).size;
+
+  const submittedSpeaker = data.speaker.trim();
+  const hasSubmittedSpeaker = ![
+    "source not provided",
+    "unknown / not provided",
+  ].includes(submittedSpeaker.toLowerCase());
 
 
   useEffect(() => {
@@ -135,58 +142,96 @@ export function ClaimReport({
             <summary>
               <span>About this assessment</span>
               <span className="assessment-details-hint">
-                Open sources, claim breakdown and quality checks
+                See what was assessed and what evidence was used
               </span>
             </summary>
 
-            <div className="assessment-details-content">
-              <VerificationNotice
-                label={verificationLabel}
-                detail={verificationDetail}
-              />
+            <div className="assessment-details-content assessment-overview">
+              <div className="assessment-overview-row">
+                <p className="section-label">What was assessed</p>
+                <div className="assessment-overview-value">
+                  <strong>
+                    {data.detectedClaims.length} testable claim
+                    {data.detectedClaims.length === 1 ? "" : "s"}
+                  </strong>
+                  {data.detectedClaims[0] && (
+                    <p>“{data.detectedClaims[0].text}”</p>
+                  )}
+                </div>
+              </div>
 
-              <AssessmentSources themes={data.scoreThemes} />
+              <div className="assessment-overview-row">
+                <p className="section-label">Attributed to</p>
+                <div className="assessment-overview-value assessment-overview-inline">
+                  <strong>
+                    {hasSubmittedSpeaker ? submittedSpeaker : "Attribution not provided"}
+                  </strong>
+                  <span>
+                    {hasSubmittedSpeaker
+                      ? "Attribution taken from the submitted text"
+                      : "Evidence was searched independently"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="assessment-overview-row">
+                <p className="section-label">Evidence used</p>
+                <div className="assessment-overview-value assessment-overview-inline">
+                  <strong>
+                    {citedSourceCount} cited source
+                    {citedSourceCount === 1 ? "" : "s"}
+                  </strong>
+                  <span>Used to support, challenge or add context to the assessment</span>
+                </div>
+              </div>
+
               {shared && (
                 <p className="shared-analysis-note">
                   This is a saved analysis. The sources and assessment are shown as they were recorded.
                 </p>
               )}
-
-              <div className="claim-context-stack">
-                <ProvenancePanel claim={claim} speaker={data.speaker} />
-                <ClaimsDetected claims={data.detectedClaims} />
-              </div>
             </div>
           </details>
         </section>
 
-        <section className="section score-section">
-          <Reveal className="section-heading">
+        <section className="section score-section why-section">
+          <Reveal className="section-heading why-heading">
             <p className="section-label">Why?</p>
-            <h2>Four ways to inspect the claim.</h2>
+            <h2>Why we reached this conclusion.</h2>
           </Reveal>
 
-          <div className="score-grid">
+          <div className="why-grid">
             {data.scoreThemes.map((theme, index) => {
               const active = selectedScore === theme.id;
 
               return (
-                <Reveal key={theme.id} delay={index * 0.08}>
-                  <div className="score-card-group">
-                    <ScoreCard
-                      theme={theme}
-                      active={active}
-                      onSelect={() =>
+                <Reveal key={theme.id} delay={index * 0.06}>
+                  <div className={`why-reason ${active ? "is-active" : ""}`}>
+                    <button
+                      type="button"
+                      className="why-reason-trigger"
+                      aria-expanded={active}
+                      onClick={() =>
                         setSelectedScore((current) =>
                           current === theme.id ? null : theme.id
                         )
                       }
-                    />
+                    >
+                      <span className="why-reason-index">0{index + 1}</span>
+                      <div className="why-reason-copy">
+                        <h3>{theme.label}</h3>
+                        <p>{theme.summary}</p>
+                      </div>
+                      <span className="why-reason-action">
+                        {active ? "Evidence open" : "View evidence"}
+                      </span>
+                    </button>
 
                     {active && (
                       <div className="mobile-card-evidence">
                         <EvidencePanel
                           theme={theme}
+                          annotations={data.annotations}
                           onClose={() => setSelectedScore(null)}
                         />
                       </div>
@@ -201,10 +246,18 @@ export function ClaimReport({
             <div className="desktop-score-evidence">
               <EvidencePanel
                 theme={selectedTheme}
+                annotations={data.annotations}
                 onClose={() => setSelectedScore(null)}
               />
             </div>
           )}
+        </section>
+
+        <section className="bottom-line-section section">
+          <Reveal>
+            <p className="section-label">Bottom line</p>
+            <h2>{data.bottomLine}</h2>
+          </Reveal>
         </section>
 
         <ClaimVsEvidence
@@ -219,17 +272,10 @@ export function ClaimReport({
           annotations={data.annotations}
         />
 
-        <section className="section plain-section">
+        <section className="section meaning-section">
           <Reveal>
-            <p className="section-label">In plain English</p>
-            <p className="plain-text">{data.plainEnglish}</p>
-          </Reveal>
-        </section>
-
-        <section className="bottom-line-section section">
-          <Reveal>
-            <p className="section-label">Bottom line</p>
-            <h2>{data.bottomLine}</h2>
+            <p className="section-label">What this means</p>
+            <p className="meaning-text">{data.plainEnglish}</p>
           </Reveal>
         </section>
 

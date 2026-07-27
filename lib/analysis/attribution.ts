@@ -56,7 +56,7 @@ export function parseAttribution(statement: string): AttributionParse {
 
   const reportingVerb =
     original.match(
-      /^(.{2,80}?)\s+(?:says|said|claims|claimed|argues|argued|states|stated|believes|believed|insists|insisted|suggests|suggested)\s+(?:that\s+)?(.+)$/i
+      /^(.{2,80}?)\s+(?:says|said|claims|claimed|asserts|asserted|argues|argued|states|stated|believes|believed|insists|insisted|suggests|suggested)\s+(?:that\s+)?(.+)$/i
     );
 
   if (reportingVerb) {

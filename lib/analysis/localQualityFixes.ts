@@ -43,8 +43,54 @@ function evidenceQualityScore(analysis: ClaimAnalysisPayload) {
   );
 }
 
+
+function isNonTestableValueJudgement(analysis: ClaimAnalysisPayload) {
+  const haystack = [
+    analysis.type,
+    analysis.verdictSummary,
+    analysis.bottomLine,
+    analysis.scoreThemes.find((theme) => theme.id === "factual")?.summary ?? "",
+  ]
+    .join(" ")
+    .toLocaleLowerCase("en");
+
+  const valueSignals = [
+    "value judgement",
+    "value judgment",
+    "subjective",
+    "moral judgement",
+    "moral judgment",
+    "political opinion",
+    "opinion",
+  ];
+  const nonTestableSignals = [
+    "cannot be objectively",
+    "cannot be verified",
+    "cannot be proven",
+    "cannot be proved",
+    "not objectively measurable",
+    "not measurable",
+    "cannot be measured",
+    "not testable",
+    "non-testable",
+  ];
+
+  return (
+    valueSignals.some((signal) => haystack.includes(signal)) &&
+    (nonTestableSignals.some((signal) => haystack.includes(signal)) ||
+      analysis.type.toLocaleLowerCase("en").includes("value"))
+  );
+}
+
 function canonicalVerdict(analysis: ClaimAnalysisPayload) {
   const current = analysis.verdict.trim();
+
+  // An inherently non-testable value judgement is an opinion-classification
+  // problem, not an evidence-volume problem. This guard intentionally runs
+  // before the approved-vocabulary early return.
+  if (isNonTestableValueJudgement(analysis)) {
+    return "Mostly opinion";
+  }
 
   if (
     ALLOWED_VERDICTS.includes(

@@ -85,7 +85,7 @@ export function AboutHowSure() {
               <div className="about-content">
                 <section className="about-intro" id="about-why">
                   <p className="about-eyebrow">A critical-thinking tool</p>
-                  <h2>Pause before accepting a confident statement as fact.</h2>
+                  <h2>Pause before accepting a confident statement at face value.</h2>
                   <p className="about-lede">
                     How Sure? helps people think more carefully about claims they see in news,
                     politics and social media.
@@ -98,9 +98,9 @@ export function AboutHowSure() {
                   </p>
                   <p>
                     Paste in a public statement and How Sure? looks for evidence, examines the
-                    wording and explains how much confidence the available information supports.
-                    It does not tell you what to think. It gives you more information to help you
-                    decide.
+                    wording and context, and shows what the available information can and cannot
+                    establish. It does not tell you what to think. It gives you more information
+                    to help you decide.
                   </p>
                 </section>
 
@@ -113,11 +113,12 @@ export function AboutHowSure() {
                   </p>
                   <ol className="about-flow" aria-label="How a claim is analysed">
                     <li><span>1</span><strong>You paste in a statement</strong></li>
-                    <li><span>2</span><strong>The main claim is identified</strong></li>
-                    <li><span>3</span><strong>The web is searched for evidence</strong></li>
-                    <li><span>4</span><strong>AI compares the claim with that evidence</strong></li>
-                    <li><span>5</span><strong>Automatic checks look for mistakes</strong></li>
-                    <li><span>6</span><strong>You see the result, reasons and sources</strong></li>
+                    <li><span>2</span><strong>Who said it is separated from what is being claimed</strong></li>
+                    <li><span>3</span><strong>The checkable parts are identified</strong></li>
+                    <li><span>4</span><strong>The web is searched for evidence</strong></li>
+                    <li><span>5</span><strong>AI examines the statement, evidence, context and wording</strong></li>
+                    <li><span>6</span><strong>Automatic checks look for mistakes</strong></li>
+                    <li><span>7</span><strong>You see the result, reasoning and sources</strong></li>
                   </ol>
                 </section>
 
@@ -143,21 +144,22 @@ export function AboutHowSure() {
                   <p className="about-eyebrow">Understanding the result</p>
                   <h2>One verdict is not enough.</h2>
                   <p>
-                    How Sure? breaks the result into four simple questions so you can see where
-                    a claim is strong and where it may be weak.
+                    How Sure? breaks the result into four questions so you can see what kind
+                    of claim you are looking at, what the evidence establishes, what context matters
+                    and how the wording shapes interpretation.
                   </p>
                   <div className="about-score-list">
-                    <article><h3>Based on facts</h3><p>How well does the evidence support the claim?</p></article>
-                    <article><h3>Evidence quality</h3><p>How trustworthy and useful are the sources?</p></article>
-                    <article><h3>Enough context</h3><p>Is important information, such as a timeframe or comparison, missing?</p></article>
-                    <article><h3>Fair wording</h3><p>Is the statement neutral, or does it use loaded language?</p></article>
+                    <article><h3>Based on facts</h3><p>Can the statement be objectively tested as written?</p></article>
+                    <article><h3>Evidence quality</h3><p>How direct, relevant and reliable is the available evidence?</p></article>
+                    <article><h3>Enough context</h3><p>Is important context missing that could change how the statement is understood?</p></article>
+                    <article><h3>Fair wording</h3><p>Does the wording use vague, broad, categorical or evaluative language?</p></article>
                   </div>
                   <div className="about-callout">
                     <p className="about-eyebrow">Claim vs evidence</p>
                     <h3>Does the statement sound more certain than the evidence allows?</h3>
                     <p>
-                      A claim can sound completely certain even when the evidence is weak. This
-                      comparison makes that gap visible.
+                      A statement can sound highly certain even when the available evidence is indirect,
+                      limited, or unable to establish the underlying judgement. This comparison makes that gap visible.
                     </p>
                   </div>
                 </section>
@@ -171,7 +173,7 @@ export function AboutHowSure() {
                     sources behind its result so you can inspect them and make up your own mind.
                   </p>
                   <div className="about-trace" aria-label="Traceability chain">
-                    <span>Score</span><b>→</b><span>Reason</span><b>→</b><span>Claim</span><b>→</b><span>Evidence</span><b>→</b><span>Source</span>
+                    <span>Score</span><b>→</b><span>Explanation</span><b>→</b><span>Claim</span><b>→</b><span>Evidence</span><b>→</b><span>Source</span>
                   </div>
                   <p>
                     Showing the method does not guarantee an answer is correct. It makes the answer
@@ -203,11 +205,11 @@ export function AboutHowSure() {
                   <h3 className="about-subheading">What is checked?</h3>
                   <ul className="about-check-list">
                     <li>Confirming who said something must not make the claim look more factual.</li>
-                    <li>High scores need evidence behind them.</li>
+                    <li>Each score must match the reasoning and evidence shown for that dimension.</li>
                     <li>The AI can only cite sources the search system actually found.</li>
                     <li>“False” is used only when evidence directly contradicts the claim.</li>
                     <li>Plain language is preferred over technical wording.</li>
-                    <li>The four scores must keep the same meaning every time.</li>
+                    <li>The four dimensions must keep the same meaning every time.</li>
                   </ul>
                 </section>
 
@@ -227,18 +229,18 @@ export function AboutHowSure() {
                   <p className="about-eyebrow">How it was built</p>
                   <h2>Generative AI works alongside ordinary software.</h2>
                   <p>
-                    Gemini carries out the language analysis and Tavily searches the web. Next.js,
-                    React and TypeScript run the application. Conventional software handles source
-                    checks, scoring rules, caching, quality controls and shared results.
+                    Gemini interprets the statement and retrieved evidence, while Tavily searches the web.
+                    Next.js, React and TypeScript run the application. Conventional software handles
+                    source checks, scoring rules, caching, quality controls and shared results.
                   </p>
                   <div className="about-architecture" aria-label="Technical architecture">
                     <span>User statement</span><b>↓</b>
-                    <span>Separate the speaker from the claim</span><b>↓</b>
-                    <span>Find the smaller claims that can be checked</span><b>↓</b>
+                    <span>Separate attribution from the proposition</span><b>↓</b>
+                    <span>Identify the checkable claims</span><b>↓</b>
                     <span>Search for evidence</span><b>↓</b>
-                    <span>Gemini analyses the evidence</span><b>↓</b>
+                    <span>AI analyses evidence, context and wording</span><b>↓</b>
                     <span>Sources and reasoning are checked</span><b>↓</b>
-                    <span>Final assessment with visible evidence</span>
+                    <span>Final assessment with inspectable reasoning and evidence</span>
                   </div>
                   <div className="about-closing">
                     <p>How Sure? does not ask you to trust it.</p>
