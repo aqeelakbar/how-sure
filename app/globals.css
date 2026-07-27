@@ -5241,3 +5241,33 @@ svg {
     padding-bottom: 46px;
   }
 }
+
+
+/* Step 59: make the landing input unmistakably editable */
+.input-field-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.input-block textarea::placeholder {
+  color: var(--muted);
+  opacity: .82;
+}
+
+.input-block textarea:focus,
+.input-block textarea:focus-visible {
+  border-top-color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .input-field-label {
+    margin-bottom: 8px;
+  }
+}

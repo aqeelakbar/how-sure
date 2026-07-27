@@ -12,7 +12,6 @@ type Props = {
 
 export function ClaimInput({ value, onChange, onAnalyse, error }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [hasEdited, setHasEdited] = useState(false);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -36,20 +35,22 @@ export function ClaimInput({ value, onChange, onAnalyse, error }: Props) {
           <p className="eyebrow">Public claim analysis</p>
           <h1>Examine the evidence behind a claim.</h1>
           <p className="lede">
-            Paste a political statement, headline, or public claim. The system
-            separates evidence, context, rhetoric, and certainty before giving
-            you a verdict.
+            How Sure? examines the evidence, context and wording behind a public
+            statement, then shows what can and cannot be established.
           </p>
         </div>
 
         <div className="input-block">
+          <label className="input-field-label" htmlFor="claim-input">
+            Paste or type a claim
+          </label>
           <textarea
+            id="claim-input"
             ref={textareaRef}
-            className={hasEdited ? undefined : "is-example"}
             value={value}
             maxLength={500}
+            placeholder="Paste a statement, headline, or question here…"
             onChange={(event) => {
-              setHasEdited(true);
               onChange(event.target.value);
             }}
             aria-label="Claim to analyse"

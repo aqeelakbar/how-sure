@@ -9,8 +9,7 @@ import { AnalysisLoading } from "@/components/AnalysisLoading";
 
 
 
-const DEFAULT_CLAIM =
-  "The new city transport plan will reduce traffic congestion and make commuting more affordable.";
+const DEFAULT_CLAIM = "";
 
 export default function Home() {
   const [claim, setClaim] = useState(DEFAULT_CLAIM);
@@ -67,6 +66,7 @@ export default function Home() {
     setAnalysis(null);
     setVerification(null);
     setSharePath(null);
+    setClaim("");
     window.history.replaceState({}, "", "/");
     setError(null);
   }

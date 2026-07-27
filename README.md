@@ -348,3 +348,7 @@ Showing the method does not guarantee that an answer is correct. It makes the an
 Designed and built by **Aqeel Akbar**, a UX engineer focused on making complex systems easier to understand, question and use.
 
 The product links to the creator's portfolio and LinkedIn profile from the About panel.
+
+
+### Landing input affordance
+The landing textarea now starts empty, uses an instructional placeholder, and is explicitly labelled **Paste or type a claim** so it is clear that the user should enter their own statement, headline, or question.
