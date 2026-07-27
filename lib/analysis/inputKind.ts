@@ -15,21 +15,21 @@ export function detectInputKind(value: string): InputKind {
 export function questionFacingVerdict(verdict: string): string {
   switch (verdict) {
     case "Well supported":
-      return "Evidence points to yes";
+      return "Yes, the evidence supports that";
     case "Mostly supported":
-      return "The evidence leans yes";
+      return "Mostly yes";
     case "Mixed evidence":
-      return "The evidence is mixed";
+      return "Not strictly true";
     case "Not enough evidence":
       return "There isn’t enough evidence to answer confidently";
     case "Mostly opinion":
-      return "The question is partly subjective";
+      return "There isn’t an objective yes-or-no answer";
     case "Misleading as stated":
-      return "The wording overstates what can be established";
+      return "Not as simply as the question suggests";
     case "Not supported by reliable evidence":
-      return "Reliable evidence does not support it";
+      return "No reliable evidence supports that";
     case "False":
-      return "Evidence points to no";
+      return "No, the evidence points the other way";
     default:
       return verdict;
   }

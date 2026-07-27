@@ -370,16 +370,18 @@ ${formatEvidence(detectedClaims, retrievedSources)}
 
 
 IMPORTANT ABOUT QUESTIONS:
-- When INPUT TYPE is Question, the user is asking How Sure? to investigate something. Do NOT judge the question itself as though the user asserted it as fact.
-- Infer the proposition or propositions that would need to be true for a "yes" answer, and analyse those against the evidence.
-- Keep the original question wording intact in statement and annotations. Do not silently rewrite the user's input into an assertion in the UI-facing fields.
+- When INPUT TYPE is Question, the user is asking How Sure? to answer something. Do NOT analyse or judge the question as though the user asserted it as fact.
+- Infer the proposition or propositions that would need to be investigated to answer the question, and test those against the evidence.
+- Keep the original question wording intact in statement and annotations.
 - The internal verdict MUST still use one of the approved verdict labels because the application quality checks depend on them.
-- For a question, verdictSummary and bottomLine MUST answer what the evidence suggests about the question, not say that "the question is false", "the question is misleading", or "the question is true".
-- If the question uses a vague, loaded or undefined term, explain that the evidence can establish some underlying facts but that the term prevents a precise yes/no conclusion.
-- For a question, rhetoricalCertainty means how strongly the wording presupposes, frames or steers toward a conclusion. A neutral open question should have low rhetoricalCertainty.
-- For a question, certaintyGapSummary should explain the difference between what the wording implies and what the evidence establishes, in plain language.
-- For questions, prioritise annotations that materially affect the answer, such as vague or undefined terms, loaded framing, evaluative wording, comparison standards, categorical wording or broad scope. Do not spend annotation slots on neutral qualifiers unless they genuinely change interpretation.
-- The four score themes remain the same: factual testability, evidence quality, enough context and fair wording.
+- verdictSummary and bottomLine MUST answer the user's question directly in plain language.
+- verdictSummary should begin with the substantive answer or distinction, not with meta-language such as "the evidence is mixed", "the sources are mixed", or "there is mixed evidence".
+- For yes/no questions, prefer formulations such as "Yes, but…", "No, not in the broad sense…", "Mostly yes…", or "There is not enough evidence to answer confidently", depending on what the evidence supports.
+- Do not describe the question itself as true, false, misleading, cautious, leading or overclaiming.
+- Wording analysis is secondary for questions. Only flag wording when a vague, loaded, undefined or evaluative term materially prevents a precise answer.
+- For questions, annotations should be sparse and only identify wording that genuinely changes the answer. Do not annotate neutral qualifiers or ordinary grammatical phrasing.
+- rhetoricalCertainty and certaintyGapSummary are retained for schema compatibility, but they are not shown as a question-scoring interface.
+- The four score themes remain the same because they explain how answerable the underlying issue is and how strong the evidence is.
 
 IMPORTANT ABOUT ATTRIBUTION:
 - If an attribution wrapper was detected, treat the attributed person/source separately from the proposition.

@@ -5210,3 +5210,34 @@ svg {
     padding-top: 30px;
   }
 }
+
+
+/* Step 52: question clarification instead of question-language analysis */
+.question-clarification-section {
+  padding-top: 58px;
+  padding-bottom: 58px;
+}
+
+.question-clarification-phrase {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -.04em;
+  font-weight: 500;
+}
+
+.question-clarification-copy {
+  max-width: 680px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .question-clarification-section {
+    padding-top: 46px;
+    padding-bottom: 46px;
+  }
+}

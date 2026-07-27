@@ -9,6 +9,7 @@ import { StatementAnatomy } from "@/components/StatementAnatomy";
 import { Reveal } from "@/components/Reveal";
 import { StickyClaimHeader } from "@/components/StickyClaimHeader";
 import { Methodology } from "@/components/Methodology";
+import { QuestionClarification } from "@/components/QuestionClarification";
 import { detectInputKind, questionFacingVerdict } from "@/lib/analysis/inputKind";
 
 type Props = {
@@ -50,12 +51,11 @@ export function ClaimReport({
     ? questionFacingVerdict(data.verdict)
     : data.verdict;
 
-  const questionHasMeaningfulWording = data.annotations.some((annotation) => {
-    const label = annotation.label.toLowerCase();
-    return !["qualifier"].includes(label);
-  });
-  const showStatementAnatomy =
-    !isQuestion || questionHasMeaningfulWording;
+  const questionClarification =
+    data.annotations.find((annotation) => {
+      const label = annotation.label.toLowerCase();
+      return !["qualifier"].includes(label);
+    }) ?? null;
 
   const submittedSpeaker = data.speaker.trim();
   const hasSubmittedSpeaker = ![
@@ -293,15 +293,20 @@ export function ClaimReport({
           </Reveal>
         </section>
 
-        <ClaimVsEvidence
-          isQuestion={isQuestion}
-          claimConfidence={data.rhetoricalCertainty}
-          evidenceSupport={data.evidenceCertainty}
-          summary={data.certaintyGapSummary}
-          sources={data.scoreThemes.flatMap((theme) => theme.sources)}
-        />
+        {!isQuestion && (
+          <ClaimVsEvidence
+            claimConfidence={data.rhetoricalCertainty}
+            evidenceSupport={data.evidenceCertainty}
+            summary={data.certaintyGapSummary}
+            sources={data.scoreThemes.flatMap((theme) => theme.sources)}
+          />
+        )}
 
-        {showStatementAnatomy && (
+        {isQuestion ? (
+          questionClarification ? (
+            <QuestionClarification annotation={questionClarification} />
+          ) : null
+        ) : (
           <StatementAnatomy
             statement={claim}
             annotations={data.annotations}
