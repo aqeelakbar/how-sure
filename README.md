@@ -2,9 +2,19 @@
 
 **How Sure?** is a critical-thinking tool for inspecting public statements before accepting them at face value.
 
+**[Try the product](https://how-sure.vercel.app) · [Read the design case study](https://portfolio-website-chi-three-67.vercel.app/work/how-sure/)**
+
 Paste in a claim, quote or political statement and How Sure? separates attribution from the underlying proposition, searches the web for relevant evidence, examines context and wording, and returns an inspectable assessment.
 
 It is not a truth machine and it does not tell the user what to think. Its job is to make the reasoning, evidence and limitations behind an assessment visible.
+
+## Why I built it
+
+Generative AI can make a weak conclusion sound persuasive. I designed and built How Sure? to help people judge a claim by showing what the evidence supports, where context matters and when confident wording goes further than the available evidence. The interface offers a short answer first, with sources, reasoning and limitations available for closer inspection.
+
+This is an independent product experiment spanning the interaction design, retrieval and analysis flow, application code, quality checks and deployment. The central design question is: **How can an AI product support judgement without replacing it?**
+
+**Built with:** Next.js, React, TypeScript, Gemini, Tavily, Zod and Postgres.
 
 > **Pause before accepting a confident statement at face value.**
 
@@ -348,7 +358,3 @@ Showing the method does not guarantee that an answer is correct. It makes the an
 Designed and built by **Aqeel Akbar**, a UX engineer focused on making complex systems easier to understand, question and use.
 
 The product links to the creator's portfolio and LinkedIn profile from the About panel.
-
-
-### Landing input affordance
-The landing textarea now starts empty, uses an instructional placeholder, and is explicitly labelled **Paste or type a claim** so it is clear that the user should enter their own statement, headline, or question.
